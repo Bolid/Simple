@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:text="GO"
+            android:id="@+id/But1" android:layout_alignParentLeft="true" android:layout_marginLeft="11dp"
+            android:layout_alignParentTop="true" android:layout_marginTop="9dp"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test ГУЙ"
+            android:id="@+id/But3" android:layout_toRightOf="@+id/But1" android:layout_alignTop="@+id/But1"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:id="@+id/But2"
+            android:layout_toRightOf="@+id/But3" android:layout_alignTop="@+id/But1"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/IM"
+            android:cropToPadding="false"
+            android:layout_centerHorizontal="true" android:layout_below="@+id/But1"/>
+    <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/TX1"
+            android:textColor="#fffeec" android:layout_alignParentLeft="true" android:layout_marginLeft="135dp"
+            android:layout_below="@+id/But1" android:gravity="right"/>
+    <Gallery
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Gall"
+            android:layout_alignParentLeft="true" android:layout_alignParentTop="true"
+            android:layout_marginTop="130dp"/>
+</RelativeLayout>
