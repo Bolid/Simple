@@ -11,5 +11,10 @@
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/manifest"/>
         </receiver>
+        <activity android:name=".ButActiv">
+            <intent-filter>
+                <action android:name="com.templates.widget.WidgetProvider.ACTION_WIDGET_BUTTON1"/>
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
