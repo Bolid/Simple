@@ -1,0 +1,39 @@
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:app="http://www.w3.org/2007/app" xmlns:f="yandex:fotki">
+  <id>urn:yandex:fotki:pod:history</id>
+  <title>История фото дня</title>
+  <updated>2012-10-09T00:01:00Z</updated>
+  <link href="http://api-fotki.yandex.ru/api/podhistory/" rel="self" />
+  <link href="http://fotki.yandex.ru/hall-of-fame/" rel="alternate" />
+  <link href="http://api-fotki.yandex.ru/api/podhistory/poddate;2012-10-04T00:00:00Z,527241,11098197/" rel="next" />
+  <entry>
+    <id>urn:yandex:fotki:osytchova:photo:534485</id>
+    <author>
+      <name>osytchova</name>
+      <f:uid>162828122</f:uid>
+    </author>
+    <title>Сказки осени</title>
+    <link href="http://api-fotki.yandex.ru/api/users/osytchova/photo/534485/" rel="self" />
+    <link href="http://api-fotki.yandex.ru/api/users/osytchova/photo/534485/" rel="edit" />
+    <link href="http://fotki.yandex.ru/users/osytchova/view/534485/" rel="alternate" />
+    <link href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_orig" rel="edit-media" />
+    <link href="http://api-fotki.yandex.ru/api/users/osytchova/album/282967/" rel="album" />
+    <published>2012-10-01T18:17:57Z</published>
+    <app:edited>2012-10-09T17:56:34Z</app:edited>
+    <updated>2012-10-09T17:56:34Z</updated>
+    <f:access value="public" />
+    <f:xxx value="false" />
+    <f:hide_original value="false" />
+    <f:disable_comments value="true" />
+    <f:img height="75" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_XXS" size="XXS" width="75" />
+    <f:img height="533" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_XL" size="XL" width="800" />
+    <f:img height="200" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_M" size="M" width="300" />
+    <f:img height="333" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_L" size="L" width="500" />
+    <f:img height="50" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_XXXS" size="XXXS" width="50" />
+    <f:img height="100" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_S" size="S" width="150" />
+    <f:img height="67" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_XS" size="XS" width="100" />
+    <f:img bytesize="0" height="600" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_orig" size="orig" width="900" />
+    <f:img height="600" href="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_XXL" size="XXL" width="900" />
+    <content src="http://img-fotki.yandex.ru/get/6522/162828122.2/0_827d5_9199bb3b_orig" type="image/*" />
+    <f:pod-date>2012-10-05T00:00:00Z</f:pod-date>
+  </entry>
+</feed>

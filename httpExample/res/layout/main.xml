@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LL"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <TableLayout
+	    android:id="@+id/Table"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">
+	    <TableRow
+	        android:id="@+id/TR"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+    		<Button
+        		android:id="@+id/But1"
+        		android:layout_width="100px"
+        		android:layout_height="60px"
+        		android:text="GO"/>
+    		<Button
+        		android:id="@+id/But3"
+        		android:layout_width="120px"
+        		android:layout_height="60px"
+        		android:text="Test ГУЙ"/>
+    		<Button
+        		android:id="@+id/But2"
+        		android:layout_width="100px"
+        		android:layout_height="60px"
+        		android:text="Clear"/>
+	    </TableRow>
+		<ScrollView
+	    android:id="@+id/Sc"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">
+	    <TextView
+	        android:id="@+id/TX1"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="right"/>
+	</ScrollView>
+	</TableLayout>
+
+	<ImageView
+	    android:id="@+id/IM"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"/>
+	<Gallery
+	    android:id="@+id/Gall"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"/>
+</LinearLayout>

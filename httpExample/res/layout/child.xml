@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/childRL"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="100dp">
+
+    <TextView
+        android:id="@+id/childTX"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Дочерняя активити..."
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:id="@+id/childBut_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/childTX"
+        android:layout_alignRight="@+id/childTX"
+        android:layout_below="@+id/childTX" />
+</RelativeLayout>

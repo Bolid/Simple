@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Example>
+	<test test1="A"/>
+	<test test2="B"/>
+	<test test3="C"/>
+</Example>

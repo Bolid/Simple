@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+	<RelativeLayout
+	    android:id="@+id/RL"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">
+	    <CheckBox
+        	android:id="@+id/ChBox1"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Нормальный"/>
+    	<CheckBox
+        	android:id="@+id/ChBox2"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="220px"
+        	android:text="Нормальный"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/ED"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16px"
+        android:text="Привет! Как дела?"/>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/TV"
+            android:layout_width="150px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90px"
+            android:layout_centerVertical="true"
+            android:text="OFF"/>
+
+        <ToggleButton
+            android:id="@+id/TB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="ВЫКЛ"
+            android:textOn="ВКЛ" />
+    </RelativeLayout>
+
+</LinearLayout>
