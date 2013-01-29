@@ -2,20 +2,20 @@
 <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Привет"
-            android:id="@+id/TX"
-            android:layout_alignParentLeft="true" android:layout_marginLeft="19dp" android:layout_alignParentTop="true"
-            android:layout_marginTop="18dp"/>
     <Button
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="Старт"
+            android:id="@+id/But1"
+            android:textColor="#15a059"
+            android:singleLine="false"
+            android:textStyle="bold" android:layout_alignParentLeft="true" android:layout_marginLeft="30dp"
+            android:layout_alignParentTop="true"/>
+    <Button
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Стоп"
             android:id="@+id/But2"
-            android:textColor="#1cd578"
-            android:singleLine="false"
-            android:layout_alignParentLeft="true" android:layout_marginLeft="82dp"
-            android:layout_alignBaseline="@+id/TX"/>
+            android:textColor="#d0131b" android:textStyle="bold" android:layout_alignParentLeft="true"
+            android:layout_marginLeft="100dp" android:layout_alignParentTop="true"/>
     ы</RelativeLayout>
