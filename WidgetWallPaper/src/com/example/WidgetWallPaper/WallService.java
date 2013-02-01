@@ -1,6 +1,7 @@
 package com.example.WidgetWallPaper;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
@@ -35,7 +36,7 @@ public class WallService extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Random random = new Random();
+        /*Random random = new Random();
         Bitmap bitmap = null;
         WallpaperManager wall = WallpaperManager.getInstance(getApplicationContext());
         String url = "";
@@ -77,11 +78,29 @@ public class WallService extends IntentService{
             //loadcontent.execute();
             SystemClock.sleep(3000);
         }
-        url = "";
+        url = "";      */
+        try {
+            fShow();
+        }catch (Exception e){
+            Log.e(TAG, "Ошибка формы", e);
+        }
+
+
     }
     public void onDestroy()
     {
         servWork = false;
         super.onDestroy();
+    }
+    public void fShow(){
+        try {
+            Intent show = new Intent(getBaseContext(), ButActiv.class);
+            show.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(show);
+        }catch (Exception e)
+        {
+            Log.e(TAG, "Ошибка загрузки формы: ", e);
+        }
+
     }
 }

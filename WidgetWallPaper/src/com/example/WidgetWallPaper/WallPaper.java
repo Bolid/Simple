@@ -12,16 +12,17 @@ import android.util.Log;
 public class WallPaper extends AppWidgetProvider {
     public static String ACTION_WIDGET_BUTTON1 = "But1";
     public static String ACTION_WIDGET_BUTTON2 = "But2";
+    public static String SetStart = "SetActic";
+    public static String Recev = "Recever";
     public  static PendingIntent button1PendingIntent = null;
     public  static PendingIntent button2PendingIntent = null;
     final String TAG = "App";
 
-   /*@Override
+   @Override
     public  void onEnabled(Context context){
-        //Подготавливаем Intent для Broadcast
 
 
-    }      */
+   }
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         //But1
