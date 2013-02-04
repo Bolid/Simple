@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.WidgetWallPaper"
-          android:versionCode="1"
-          android:versionName="1.0">
+          package="com.example.WidgetWallPaper">
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-sdk android:minSdkVersion="15"/>
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <receiver android:name=".WallPaper">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.templates.widget.WidgetProvider.ACTION_WIDGET_BUTTON1"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/manifest"/>
         </receiver>
-        <activity android:name=".ButActiv">
-            <intent-filter>
-                <action android:name="com.templates.widget.WidgetProvider.ACTION_WIDGET_BUTTON1"/>
-            </intent-filter>
-        </activity>
+        <activity android:name=".ButActiv"></activity>
+        <service android:name=".WallService"></service>
     </application>
 </manifest>

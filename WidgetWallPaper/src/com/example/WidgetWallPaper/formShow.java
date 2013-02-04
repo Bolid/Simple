@@ -11,7 +11,9 @@ import android.content.Intent;
  */
 public class formShow {
       public void fShow(){
-          Intent child = new Intent(formShow.this, );
+          Intent child = new Intent();
 
       }
+
+
 }
