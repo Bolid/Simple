@@ -18,6 +18,8 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Random;
 
 
@@ -36,22 +38,20 @@ public class WallService extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        /*Random random = new Random();
         Bitmap bitmap = null;
         WallpaperManager wall = WallpaperManager.getInstance(getApplicationContext());
         String url = "";
         String fDate = "";
-        int month = 0;
-        int day = 0;
-        int year = 0;
         while (servWork){
-            while (month==0)
-                month = random.nextInt(13);
-            if (month == 2)
-                day = random.nextInt(28);
-            else day = random.nextInt(30);
-            year = random.nextInt(5)+2008;
-            fDate = day+"-"+month+"-"+year;
+            try {
+                Log.v(TAG, "-------------------------");
+                fDate = createDate();
+                Log.i(TAG, "Дата: "+fDate);
+            }
+            catch (Exception e) {
+                Log.e(TAG, "Ошибка создания даты: ", e);
+            }
+
             url = "http://api-fotki.yandex.ru/api/podhistory/poddate;"+fDate+"/?limit=1";
             try{
                 URL conn = new URL(url);
@@ -72,18 +72,13 @@ public class WallService extends IntentService{
                 wall.setBitmap(bitmap);
             }
             catch (Exception e){
-                Log.e(TAG, "Ошибка: ", e);
+                Log.e(TAG, "Ошибка закачки: ", e);
             }
             //LoadContent loadcontent = new LoadContent(url, getApplicationContext());
             //loadcontent.execute();
             SystemClock.sleep(3000);
         }
-        url = "";      */
-        try {
-            fShow();
-        }catch (Exception e){
-            Log.e(TAG, "Ошибка формы", e);
-        }
+        url = "";
 
 
     }
@@ -92,15 +87,41 @@ public class WallService extends IntentService{
         servWork = false;
         super.onDestroy();
     }
-    public void fShow(){
-        try {
-            Intent show = new Intent(getBaseContext(), ButActiv.class);
-            show.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(show);
-        }catch (Exception e)
-        {
-            Log.e(TAG, "Ошибка загрузки формы: ", e);
-        }
 
+    public String createDate(){
+        int year;
+        int month = 0;
+        int day = 0;
+        int tYear;
+        int tDay;
+        int tMonth;
+        String fDate = null;
+        Random random = new Random();
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat pattern = new SimpleDateFormat();
+        pattern.applyPattern("yyyy");
+        tYear = Integer.parseInt(pattern.format(calendar.getTime())); //текущий год
+        year = random.nextInt(tYear - 2007);
+        year = year + 2008; //готовый год
+        pattern.applyPattern("MM");
+        tMonth = Integer.parseInt(pattern.format(calendar.getTime())); //текущий месяц
+        pattern.applyPattern("dd");
+        tDay = Integer.parseInt(pattern.format(calendar.getTime())); //текущий день
+        while (month == 0 || (month > tMonth && year == tYear))
+            month = random.nextInt(13); //готовый месяц
+        while (day == 0 || (day > tDay && month == tMonth && year == tYear))
+            if (month == 4 || month == 6 || month == 9 || month == 11)
+                day = random.nextInt(31);
+            else if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+                day = random.nextInt(32);
+            else if (month == 2)
+                if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
+                    day = random.nextInt(30);
+                else day = random.nextInt(29);
+        fDate = day+"-"+month+"-"+year;
+
+
+        return fDate;
     }
+
 }

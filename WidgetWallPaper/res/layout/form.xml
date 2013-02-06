@@ -3,10 +3,66 @@
 <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/button"
+            android:layout_alignParentLeft="true" android:layout_marginLeft="20dp"
+            android:layout_alignParentBottom="true"/>
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Больше не показывать"
+            android:id="@+id/CB"
+            android:checked="false"
+            android:layout_alignParentLeft="true" android:layout_above="@+id/button"/>
+    <TextView
+            android:layout_width="111dp"
+            android:layout_height="wrap_content"
+            android:text="Настройки "
+            android:id="@+id/textView"
+            android:textSize="20dp"
+            android:layout_alignParentRight="true" android:layout_alignParentTop="true" android:textStyle="bold"
+            android:textColor="#bdff9d"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button click"
-            android:id="@+id/TX" android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+            android:text="Периодичность скачивания"
+            android:id="@+id/TX1"
+            android:textSize="16dp"
+            android:textColor="#8cff56" android:layout_alignLeft="@+id/button" android:layout_alignParentTop="true"
             android:layout_marginTop="32dp"/>
+    <RadioGroup
+            android:layout_width="278dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_above="@+id/GB" android:layout_below="@+id/TX1" android:layout_alignLeft="@+id/button"
+            android:padding="0dp">
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Раз в 24 часа"
+                android:id="@+id/RB1" android:layout_gravity="left|center_vertical" android:checked="true"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Раз в 6 часов"
+                android:id="@+id/RB2" android:layout_gravity="left|center_vertical" android:checked="false"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Раз в 3 часа"
+                android:id="@+id/RB3" android:layout_gravity="left|center_vertical" android:checked="false"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Раз в 1 час"
+                android:id="@+id/RB4" android:layout_gravity="left|center_vertical" android:checked="false"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Раз в 15 минут"
+                android:id="@+id/RB5" android:layout_gravity="left|center_vertical" android:checked="false"/>
+    </RadioGroup>
 </RelativeLayout>

@@ -9,6 +9,9 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class WallPaper extends AppWidgetProvider {
     public static String ACTION_WIDGET_BUTTON1 = "But1";
     public static String ACTION_WIDGET_BUTTON2 = "But2";
@@ -53,7 +56,20 @@ public class WallPaper extends AppWidgetProvider {
 
                 try
                 {
-                    context.startService(new Intent(context, WallService.class));
+                    //ButActiv butActiv = new ButActiv(true);
+                    Intent show = new Intent(context, ButActiv.class);
+                    show.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    show.putExtra("com.example.WidgetWallPaper.startServ", "true");
+                    //context.startActivity(show);
+                    context.startActivity(show);
+                    //Boolean startServ = true;
+
+                    //Boolean setSave = false;
+                   // while (butActiv.setSave){
+                     //   context.startService(new Intent(context, WallService.class));
+                        //setSave = butActiv.setSave;
+                    //}
+                    Log.v(TAG, "Служба не запущена.");
                 }
                 catch (Exception e){Log.e(TAG, "Ошибка запуска: ", e);}
             }
