@@ -9,6 +9,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
                 <action android:name="com.templates.widget.WidgetProvider.ACTION_WIDGET_BUTTON1"/>
+                <action android:name="com.templates.widget.WidgetProvider.ACTION_WIDGET_BUTTON3"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/manifest"/>
         </receiver>

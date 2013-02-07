@@ -18,4 +18,11 @@
             android:id="@+id/But2"
             android:textColor="#d0131b" android:textStyle="bold" android:layout_alignParentLeft="true"
             android:layout_marginLeft="100dp" android:layout_alignParentTop="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Настройка"
+            android:id="@+id/But3"
+            android:layout_toRightOf="@+id/But2" android:layout_alignTop="@+id/But1" android:textColor="#1413ff"
+            android:textStyle="bold"/>
     ы</RelativeLayout>

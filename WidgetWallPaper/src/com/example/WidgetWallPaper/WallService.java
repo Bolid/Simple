@@ -4,6 +4,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.app.WallpaperManager;
+import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
@@ -16,6 +18,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -39,6 +42,7 @@ public class WallService extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
         Bitmap bitmap = null;
+        SharedPreferences mSetting = getSharedPreferences("AppSetting", Context.MODE_PRIVATE);
         WallpaperManager wall = WallpaperManager.getInstance(getApplicationContext());
         String url = "";
         String fDate = "";
@@ -64,19 +68,24 @@ public class WallService extends IntentService{
                 xmlReader.setContentHandler(mypar);
                 xmlReader.parse(inputSource);
                 url = mypar.url;
+                Log.v(TAG, "URL: "+url);
                 conn = new URL(url);
                 URLConnection URLcon = conn.openConnection();
                 BufferedInputStream Buf_srt = new BufferedInputStream(URLcon.getInputStream(),8192);
                 bitmap = BitmapFactory.decodeStream(Buf_srt);
                 Buf_srt.close();
                 wall.setBitmap(bitmap);
+                bitmap = null;
+                saxParser = null;
+                inputSource = null;
             }
             catch (Exception e){
                 Log.e(TAG, "Ошибка закачки: ", e);
             }
             //LoadContent loadcontent = new LoadContent(url, getApplicationContext());
             //loadcontent.execute();
-            SystemClock.sleep(3000);
+            Log.v(TAG, "Период скачивания: "+Integer.toString(mSetting.getInt("periodLoad", 86400)*1000));
+            SystemClock.sleep(mSetting.getInt("periodLoad", 86400)*1000);
         }
         url = "";
 
@@ -119,9 +128,19 @@ public class WallService extends IntentService{
                     day = random.nextInt(30);
                 else day = random.nextInt(29);
         fDate = day+"-"+month+"-"+year;
+        /*year = 0;
+        month = 0;
+        day = 0;
+        tYear = 0;
+        tDay = 0;
+        tMonth = 0;
+        random = null;
+        calendar = null;
+        pattern = null;*/
 
 
         return fDate;
     }
+
 
 }
