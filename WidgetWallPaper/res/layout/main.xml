@@ -8,21 +8,29 @@
             android:text="Старт"
             android:id="@+id/But1"
             android:textColor="#15a059"
-            android:singleLine="false"
-            android:textStyle="bold" android:layout_alignParentLeft="true" android:layout_marginLeft="30dp"
-            android:layout_alignParentTop="true"/>
+            android:textStyle="bold"
+            android:layout_alignParentLeft="true" android:layout_alignTop="@+id/But2"/>
     <Button
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Стоп"
             android:id="@+id/But2"
-            android:textColor="#d0131b" android:textStyle="bold" android:layout_alignParentLeft="true"
-            android:layout_marginLeft="100dp" android:layout_alignParentTop="true"/>
+            android:textColor="#d0131b" android:textStyle="bold"
+            android:layout_alignParentLeft="true" android:layout_marginLeft="70dp"
+            android:layout_alignParentTop="true"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Настройка"
             android:id="@+id/But3"
-            android:layout_toRightOf="@+id/But2" android:layout_alignTop="@+id/But1" android:textColor="#1413ff"
+            android:textColor="#1413ff"
+            android:textStyle="bold"
+            android:layout_toRightOf="@+id/But2" android:layout_alignTop="@+id/But1"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Галлерея"
+            android:id="@+id/But4"
+            android:layout_toRightOf="@+id/But3" android:layout_alignTop="@+id/But1" android:textColor="#f019cb"
             android:textStyle="bold"/>
     ы</RelativeLayout>

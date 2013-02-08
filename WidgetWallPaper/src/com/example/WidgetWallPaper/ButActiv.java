@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.*;
 
 public class ButActiv extends Activity {
@@ -22,6 +23,7 @@ public class ButActiv extends Activity {
     @Override
     public void onCreate (Bundle saveIns){
         super.onCreate(saveIns);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.form);
         mSetting = getSharedPreferences(AppSetting, Context.MODE_PRIVATE);
         final Editor editor = mSetting.edit();
@@ -71,6 +73,7 @@ public class ButActiv extends Activity {
             @Override
             public void onClick(View view) {
                 finish();
+                //Intent stop = new Intent(getBaseContext(), formGallery.class);
                 Log.v(TAG, "Activity закрыта без сохранения настроек.");
             }
         });

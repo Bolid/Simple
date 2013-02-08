@@ -1,10 +1,9 @@
 package com.example.WidgetWallPaper;
 
 import android.app.IntentService;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
-import android.app.WallpaperManager;
-import android.database.Cursor;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,8 +16,6 @@ import org.xml.sax.XMLReader;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -42,10 +39,25 @@ public class WallService extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
         Bitmap bitmap = null;
+        myParser mypar = null;
+        URL conn = null;
+        InputSource inputSource = null;
+        XMLReader xmlReader = null;
+        BufferedInputStream Buf_srt = null;
         SharedPreferences mSetting = getSharedPreferences("AppSetting", Context.MODE_PRIVATE);
         WallpaperManager wall = WallpaperManager.getInstance(getApplicationContext());
         String url = "";
         String fDate = "";
+        try {
+            Buf_srt = new BufferedInputStream(null);
+            inputSource = new InputSource();
+            mypar = new myParser();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            xmlReader = saxParser.getXMLReader();
+        } catch (Exception e){
+            Log.e(TAG, "Ошибка инициализации парсера", e);
+        }
         while (servWork){
             try {
                 Log.v(TAG, "-------------------------");
@@ -57,34 +69,37 @@ public class WallService extends IntentService{
             }
 
             url = "http://api-fotki.yandex.ru/api/podhistory/poddate;"+fDate+"/?limit=1";
+            Log.v(TAG, "URL сервисного документа: "+url);
             try{
-                URL conn = new URL(url);
-                InputSource inputSource = new InputSource(conn.openStream());
+                conn = new URL(url);
+                inputSource = new InputSource(conn.openStream());
                 inputSource.setEncoding("UTF-8");
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                SAXParser saxParser = factory.newSAXParser();
-                XMLReader xmlReader = saxParser.getXMLReader();
-                myParser mypar = new myParser();
                 xmlReader.setContentHandler(mypar);
                 xmlReader.parse(inputSource);
                 url = mypar.url;
-                Log.v(TAG, "URL: "+url);
+                Log.v(TAG, "URL фотки: "+url);
                 conn = new URL(url);
                 URLConnection URLcon = conn.openConnection();
-                BufferedInputStream Buf_srt = new BufferedInputStream(URLcon.getInputStream(),8192);
+                Buf_srt = new BufferedInputStream(URLcon.getInputStream(),8192);
                 bitmap = BitmapFactory.decodeStream(Buf_srt);
                 Buf_srt.close();
                 wall.setBitmap(bitmap);
-                bitmap = null;
-                saxParser = null;
-                inputSource = null;
             }
             catch (Exception e){
                 Log.e(TAG, "Ошибка закачки: ", e);
+
             }
             //LoadContent loadcontent = new LoadContent(url, getApplicationContext());
             //loadcontent.execute();
             Log.v(TAG, "Период скачивания: "+Integer.toString(mSetting.getInt("periodLoad", 86400)*1000));
+            bitmap = null;
+            //saxParser = null;
+            inputSource = null;
+            url = null;
+            conn = null;
+            inputSource = null;
+            Buf_srt = null;
+            System.gc();
             SystemClock.sleep(mSetting.getInt("periodLoad", 86400)*1000);
         }
         url = "";
@@ -96,6 +111,7 @@ public class WallService extends IntentService{
         servWork = false;
         super.onDestroy();
     }
+
 
     public String createDate(){
         int year;
@@ -128,7 +144,7 @@ public class WallService extends IntentService{
                     day = random.nextInt(30);
                 else day = random.nextInt(29);
         fDate = day+"-"+month+"-"+year;
-        /*year = 0;
+        year = 0;
         month = 0;
         day = 0;
         tYear = 0;
@@ -136,7 +152,8 @@ public class WallService extends IntentService{
         tMonth = 0;
         random = null;
         calendar = null;
-        pattern = null;*/
+        pattern = null;
+        System.gc();
 
 
         return fDate;

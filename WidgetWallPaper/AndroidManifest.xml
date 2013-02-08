@@ -13,7 +13,8 @@
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/manifest"/>
         </receiver>
-        <activity android:name=".ButActiv"></activity>
+        <activity android:name=".ButActiv" android:screenOrientation="portrait"></activity>
+        <activity android:name=".formGallery"></activity>
         <service android:name=".WallService"></service>
     </application>
 </manifest>
