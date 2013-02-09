@@ -1,10 +1,10 @@
 package com.example.WidgetWallPaper;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Gallery;
-import android.widget.Toast;
 
 public class formGallery extends ButActiv {
     @Override
@@ -21,6 +21,12 @@ public class formGallery extends ButActiv {
 
             }
         });
+
+    }
+    public void onStop() {
+        super.onStop();
+        finish();
+        Log.v(TAG, "Форма убита");
 
     }
 }

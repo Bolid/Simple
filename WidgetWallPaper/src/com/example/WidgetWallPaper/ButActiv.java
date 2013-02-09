@@ -43,7 +43,7 @@ public class ButActiv extends Activity {
                         break;
                     case R.id.RB3: editor.putInt(periodLoad, 10800);
                         break;
-                    case R.id.RB4: editor.putInt(periodLoad, 3600);
+                    case R.id.RB4: editor.putInt(periodLoad, 10);
                         break;
                     case R.id.RB5: editor.putInt(periodLoad, 3);
                         break;
@@ -92,13 +92,17 @@ public class ButActiv extends Activity {
                     break;
                 case 10800: RG.check(R.id.RB3);
                     break;
-                case 3600: RG.check(R.id.RB4);
+                case 10: RG.check(R.id.RB4);
                     break;
                 case 3: RG.check(R.id.RB5);
                     break;
             }
 
         Log.v(TAG, "Настройки считаны.");
+    }
+    public void onStop() {
+        super.onStop();
+        finish();
     }
 }
 

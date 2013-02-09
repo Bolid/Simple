@@ -5,6 +5,7 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
@@ -16,6 +17,9 @@ import org.xml.sax.XMLReader;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -40,6 +44,8 @@ public class WallService extends IntentService{
     protected void onHandleIntent(Intent intent) {
         Bitmap bitmap = null;
         myParser mypar = null;
+        BufferedWriter bw = null;
+        Calendar calendar = Calendar.getInstance();
         URL conn = null;
         InputSource inputSource = null;
         XMLReader xmlReader = null;
@@ -67,10 +73,11 @@ public class WallService extends IntentService{
             catch (Exception e) {
                 Log.e(TAG, "Ошибка создания даты: ", e);
             }
-
-            url = "http://api-fotki.yandex.ru/api/podhistory/poddate;"+fDate+"/?limit=1";
-            Log.v(TAG, "URL сервисного документа: "+url);
             try{
+                bw = new BufferedWriter(new OutputStreamWriter(openFileOutput("log.txt", MODE_APPEND)));
+                url = "http://api-fotki.yandex.ru/api/podhistory/poddate;"+fDate+"/?limit=1";
+                bw.write(String.valueOf(calendar.getTime()) + ": Дата - " + fDate + " URL сервисного документа: " + url + "\n");
+                Log.v(TAG, "URL сервисного документа: " + url);
                 conn = new URL(url);
                 inputSource = new InputSource(conn.openStream());
                 inputSource.setEncoding("UTF-8");
@@ -84,10 +91,20 @@ public class WallService extends IntentService{
                 bitmap = BitmapFactory.decodeStream(Buf_srt);
                 Buf_srt.close();
                 wall.setBitmap(bitmap);
+                bw.write(String.valueOf(calendar.getTime()) + ": Дата - " + fDate + " URL фото дня: " + url + "\n");
             }
             catch (Exception e){
                 Log.e(TAG, "Ошибка закачки: ", e);
+                try {
+                    bw.write(String.valueOf(calendar.getTime()) + ": ОШИБКА:/n" + String.valueOf(e) + "\n");
+                    bw.close();
+                } catch (IOException e1) {
+                }
 
+                Editor editor = mSetting.edit();
+                editor.putString("LOGerror", String.valueOf(e));
+                editor.commit();
+                editor = null;
             }
             //LoadContent loadcontent = new LoadContent(url, getApplicationContext());
             //loadcontent.execute();
@@ -99,6 +116,13 @@ public class WallService extends IntentService{
             conn = null;
             inputSource = null;
             Buf_srt = null;
+            try {
+                bw.write(String.valueOf(calendar.getTime())+"Период скачивания: "+Integer.toString(mSetting.getInt("periodLoad", 86400) * 1000)+"\n");
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            bw = null;
             System.gc();
             SystemClock.sleep(mSetting.getInt("periodLoad", 86400)*1000);
         }

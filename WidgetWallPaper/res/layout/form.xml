@@ -57,7 +57,7 @@
         <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Раз в 1 час"
+                android:text="Раз в 10 секунд"
                 android:id="@+id/RB4" android:layout_gravity="left|center_vertical" android:checked="false"/>
         <RadioButton
                 android:layout_width="wrap_content"

@@ -30,19 +30,19 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/AndroidManifest.xml" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360324923886" ignored="false" />
     <file path="/Widget.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1356808638750" ignored="false" />
-    <file path="/WallPaper.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360324206114" ignored="false" />
+    <file path="/WallPaper.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360435103885" ignored="false" />
     <file path="/manifest.xml" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1356809600093" ignored="false" />
     <file path="/fragment.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360235772161" ignored="false" />
-    <file path="/ButActiv.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360325554707" ignored="false" />
+    <file path="/ButActiv.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360442197682" ignored="false" />
     <file path="/Dummy.txt" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360317474795" ignored="false" />
     <file path="/formShow.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1359046871916" ignored="false" />
-    <file path="/WallService.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360349382782" ignored="false" />
+    <file path="/WallService.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360452105186" ignored="false" />
     <file path="/form.xml" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360143842786" ignored="false" />
     <file path="/strings.xml" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360231182418" ignored="false" />
-    <file path="$PROJECT_DIR$/gen/com/example/WidgetWallPaper/BuildConfig.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360324947181" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/com/example/WidgetWallPaper/BuildConfig.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360442017044" ignored="false" />
     <file path="$PROJECT_DIR$/gen/com/example/WidgetWallPaper/Manifest.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360324947181" ignored="false" />
     <file path="/loadContent.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360314581251" ignored="false" />
-    <file path="/formGallery.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360326104075" ignored="false" />
+    <file path="/formGallery.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360441891497" ignored="false" />
     <file path="/myAdapter.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360326631322" ignored="false" />
     <file path="$PROJECT_DIR$/gen/com/example/WidgetWallPaper/R.java" changelist="2247e363-d89e-4ab6-b9c9-9ef6400b3d39" time="1360324947181" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -93,9 +93,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallService.java" line="102" class="com.example.WidgetWallPaper.WallService" package="com.example.WidgetWallPaper">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallService.java" line="126" class="com.example.WidgetWallPaper.WallService" package="com.example.WidgetWallPaper">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -109,7 +108,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallService.java" line="158" class="com.example.WidgetWallPaper.WallService" package="com.example.WidgetWallPaper">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallService.java" line="182" class="com.example.WidgetWallPaper.WallService" package="com.example.WidgetWallPaper">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -124,6 +123,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
@@ -137,16 +137,16 @@
       <file leaf-file-name="WallPaper.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallPaper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="71" selection-start="2631" selection-end="2631" vertical-scroll-proportion="0.0">
+            <state line="8" column="0" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="myParser.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="myParser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/myParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="13" selection-start="159" selection-end="159" vertical-scroll-proportion="-0.8264249">
+            <state line="23" column="31" selection-start="767" selection-end="767" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -155,26 +155,21 @@
       <file leaf-file-name="ButActiv.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/ButActiv.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="20" selection-start="2929" selection-end="2929" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="85" column="83" selection-start="3331" selection-end="3331" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WallService.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="WallService.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="0" selection-start="2425" selection-end="2425" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IntentService.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/IDEA/android-sdk-linux/platforms/android-15/android.jar!/android/app/IntentService.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="834" selection-end="834" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="120" column="27" selection-start="4765" selection-end="4765" vertical-scroll-proportion="0.7828418">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -182,7 +177,7 @@
       <file leaf-file-name="formGallery.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/formGallery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="0" selection-start="763" selection-end="763" vertical-scroll-proportion="0.0">
+            <state line="26" column="8" selection-start="828" selection-end="828" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -248,22 +243,22 @@
         <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/formShow.java" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/gen/com/example/WidgetWallPaper/R.java" />
-        <option value="$PROJECT_DIR$/res/layout/form.xml" />
         <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/loadContent.java" />
         <option value="$PROJECT_DIR$/res/layout/formGallery.xml" />
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/ButActiv.java" />
-        <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/formGallery.java" />
         <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/myAdapter.java" />
-        <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallService.java" />
         <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallPaper.java" />
+        <option value="$PROJECT_DIR$/res/layout/form.xml" />
+        <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/formGallery.java" />
+        <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/ButActiv.java" />
+        <option value="$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallService.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="204" />
-    <option name="y" value="95" />
+    <option name="x" value="-1" />
+    <option name="y" value="26" />
     <option name="width" value="1026" />
     <option name="height" value="575" />
   </component>
@@ -343,6 +338,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -389,27 +385,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WidgetWallPaper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WidgetWallPaper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -425,14 +402,14 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="AndroidLayoutSelectedEditor" value="android-designer" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="DEBUGGABLE_DEVICE" value="HT9CPP802371" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="DEBUGGABLE_DEVICE" value="HT9CPP802371" />
     <property name="DEBUGGABLE_PROCESS" value="com.example.WidgetWallPaper" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="Android Application.WidgetWallPaper">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -466,19 +443,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -504,6 +468,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -608,9 +585,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="204" y="95" width="1026" height="575" extended-state="6" />
+    <frame x="-1" y="26" width="1026" height="575" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32822084" sideWeight="0.14712644" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32719836" sideWeight="0.14712644" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -620,16 +599,14 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32873562" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.85287356" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.94712645" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24846625" sideWeight="0.50574714" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24846625" sideWeight="0.14712644" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49425286" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32822084" sideWeight="0.50574714" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32719836" sideWeight="0.09195402" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991803" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -697,11 +674,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/IDEA/android-sdk-linux/platforms/android-15/android.jar!/android/os/Handler.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="16" selection-start="564" selection-end="564" vertical-scroll-proportion="0.09115282" />
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/IDEA/android-sdk-linux/platforms/android-15/android.jar!/android/os/Looper.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="16" selection-start="725" selection-end="725" vertical-scroll-proportion="0.49481866" />
@@ -715,16 +687,6 @@
     <entry file="jar://$USER_HOME$/IDEA/android-sdk-linux/platforms/android-15/android.jar!/android/util/Log.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="40" column="22" selection-start="1678" selection-end="1678" vertical-scroll-proportion="0.31610942" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/form.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state line="50" column="33" selection-start="2426" selection-end="2426" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
@@ -759,17 +721,50 @@
         <state line="320" column="23" selection-start="13264" selection-end="13264" vertical-scroll-proportion="2.0616622" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/ButActiv.java">
+    <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/myParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="20" selection-start="2929" selection-end="2929" vertical-scroll-proportion="0.0">
+        <state line="23" column="31" selection-start="767" selection-end="767" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/IDEA/android-sdk-linux/platforms/android-15/android.jar!/android/app/IntentService.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="0" selection-start="830" selection-end="830" vertical-scroll-proportion="0.7668394">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/form.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="50" column="33" selection-start="2426" selection-end="2426" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallPaper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/formGallery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="763" selection-end="763" vertical-scroll-proportion="0.0">
+        <state line="26" column="8" selection-start="828" selection-end="828" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/ButActiv.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="83" selection-start="3331" selection-end="3331" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -780,31 +775,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/IDEA/android-sdk-linux/platforms/android-15/android.jar!/android/app/IntentService.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="834" selection-end="834" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="0" selection-start="2425" selection-end="2425" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/WallPaper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="71" selection-start="2631" selection-end="2631" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/WidgetWallPaper/myParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="159" selection-end="159" vertical-scroll-proportion="-0.8264249">
-          <folding />
+        <state line="120" column="27" selection-start="4765" selection-end="4765" vertical-scroll-proportion="0.7828418">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
