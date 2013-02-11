@@ -1,5 +1,6 @@
 package com.example.WidgetWallPaper;
 
+import android.util.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -28,7 +29,7 @@ public class myParser extends DefaultHandler{
                 title = "1";
         }
         catch (Exception e) {
-
+            Log.e("ПАРСЕР. ОШИБКА РАЗБОРА", String.valueOf(e));
         }
     }
     public void endElement (String namespaseURI, String localName, String qName) throws SAXException{

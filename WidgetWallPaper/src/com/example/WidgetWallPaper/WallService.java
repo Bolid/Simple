@@ -1,27 +1,11 @@
 package com.example.WidgetWallPaper;
 
 import android.app.IntentService;
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.IBinder;
-import android.os.SystemClock;
-import android.util.Log;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
@@ -42,30 +26,34 @@ public class WallService extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Bitmap bitmap = null;
-        myParser mypar = null;
+        //Bitmap bitmap = null;
+        /*myParser mypar = null;
         BufferedWriter bw = null;
         Calendar calendar = Calendar.getInstance();
         URL conn = null;
         InputSource inputSource = null;
         XMLReader xmlReader = null;
-        BufferedInputStream Buf_srt = null;
+        BufferedInputStream Buf_srt = null;*/
         SharedPreferences mSetting = getSharedPreferences("AppSetting", Context.MODE_PRIVATE);
-        WallpaperManager wall = WallpaperManager.getInstance(getApplicationContext());
+        /*WallpaperManager wall = WallpaperManager.getInstance(getApplicationContext());
         String url = "";
         String fDate = "";
         try {
-            Buf_srt = new BufferedInputStream(null);
-            inputSource = new InputSource();
             mypar = new myParser();
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             xmlReader = saxParser.getXMLReader();
         } catch (Exception e){
             Log.e(TAG, "Ошибка инициализации парсера", e);
-        }
+        }*/
+
+
         while (servWork){
-            try {
+            loadContent loadCont = new loadContent(getBaseContext());
+            loadCont.load();
+            loadCont = null;
+            System.gc();
+            /*try {
                 Log.v(TAG, "-------------------------");
                 fDate = createDate();
                 Log.i(TAG, "Дата: "+fDate);
@@ -96,15 +84,10 @@ public class WallService extends IntentService{
             catch (Exception e){
                 Log.e(TAG, "Ошибка закачки: ", e);
                 try {
-                    bw.write(String.valueOf(calendar.getTime()) + ": ОШИБКА:/n" + String.valueOf(e) + "\n");
+                    bw.write(String.valueOf(calendar.getTime()) + ": ОШИБКА:\n" + String.valueOf(e) + "\n");
                     bw.close();
                 } catch (IOException e1) {
                 }
-
-                Editor editor = mSetting.edit();
-                editor.putString("LOGerror", String.valueOf(e));
-                editor.commit();
-                editor = null;
             }
             //LoadContent loadcontent = new LoadContent(url, getApplicationContext());
             //loadcontent.execute();
@@ -123,10 +106,14 @@ public class WallService extends IntentService{
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             bw = null;
-            System.gc();
-            SystemClock.sleep(mSetting.getInt("periodLoad", 86400)*1000);
+            System.gc();*/
+            try {
+                Thread.sleep(mSetting.getInt("periodLoad", 86400)*1000);
+            } catch (InterruptedException e) {
+                //Log.e(TAG, "ОШИБКА ЗАДЕРЖКИ: ", e);
+            }
         }
-        url = "";
+        //url = "";
 
 
     }
@@ -181,6 +168,9 @@ public class WallService extends IntentService{
 
 
         return fDate;
+    }
+    public void logApp(){
+
     }
 
 
