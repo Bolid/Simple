@@ -6,11 +6,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-public class myAdapter extends BaseAdapter {
+public class MyAdapter extends BaseAdapter {
     int  mGallery;
     Context mContext;
     int  image[] = new int[4];
-    public myAdapter(Context context) {
+    public MyAdapter(Context context) {
         this.mContext = context;
         for (int i = 0; i < image.length; i++){
             switch (i){

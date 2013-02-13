@@ -21,29 +21,34 @@ import java.util.Calendar;
 import java.util.Random;
 
 
-public class loadContent{
+public class LoadContent {
     final String TAG = "SERV";
+
+    Calendar calendar = Calendar.getInstance();
     Context context;
-    public loadContent(Context context) {
-        this.context = context;
-    }
+    WallHistory wallHistory;
     BufferedWriter bw = null;
     XMLReader xmlReader = null;
     String fDate = createDate();
     String url = "http://api-fotki.yandex.ru/api/podhistory/poddate;"+fDate+"/?limit=1";
 
-
+    public LoadContent(Context context, BufferedWriter bw, WallHistory wallHistory) {
+       this.context = context;
+       this.bw = bw;
+       this.wallHistory = wallHistory;
+    }
 
     public void parse(InputSource inputSource){
         try {
-            myParser mypar = new myParser();
+            MyParser mypar = new MyParser();
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             xmlReader = saxParser.getXMLReader();
             xmlReader.setContentHandler(mypar);
             xmlReader.parse(inputSource);
             url = mypar.url;
-            //LOG
+            Log.v(TAG, "URL фотки: "+url);
+            bw.write("URL фотки: "+url);
             loadImage(url);
             return;
         } catch (Exception e){
@@ -52,6 +57,12 @@ public class loadContent{
 
     }
     public void load(){
+        try {
+            bw.write(String.valueOf(calendar.getTime())+": Дата: "+fDate+"\n");
+            Log.v(TAG, "URL сервисного документа: " + url);
+            wallHistory.setUrl(url);
+            bw.write(String.valueOf(calendar.getTime())+": URL сервисного документа: "+url+"\n");
+        } catch (IOException e) {    }
         InputSource inputSource = null;
         //LOG
         try {
@@ -60,8 +71,17 @@ public class loadContent{
             inputSource.setEncoding("UTF-8");
             parse(inputSource);
         }
-        catch (Exception e){
+        catch (MalformedURLException e){
+            Log.e(TAG, "Ошибка URL: ", e);
+
+        }
+        catch (IOException e){
             Log.e(TAG, "Ошибка подключения: ", e);
+            try{
+                bw.write(String.valueOf(calendar.getTime())+": Ошибка подключения: "+String.valueOf(e)+"\n");
+            }catch (IOException e1){
+                Log.e(TAG, "Ошибка: ", e1);
+            }
         }
 
 
@@ -77,6 +97,8 @@ public class loadContent{
             Buf_srt.close();
             WallpaperManager wall = WallpaperManager.getInstance(context);
             wall.setBitmap(bitmap);
+            Log.v(TAG, "Обой установлены.");
+            bw.write(String.valueOf(calendar.getTime())+": Обой установлены.\n");
         }catch (MalformedURLException e) {
             Log.e(TAG, "Ошибка преобразования адреса: ",e);
         }catch (IOException e) {
@@ -115,7 +137,7 @@ public class loadContent{
                     day = random.nextInt(30);
                 else day = random.nextInt(29);
         fDate = day+"-"+month+"-"+year;
-        year = 0;
+        /*year = 0;
         month = 0;
         day = 0;
         tYear = 0;
@@ -124,7 +146,8 @@ public class loadContent{
         random = null;
         calendar = null;
         pattern = null;
-        System.gc();
+        System.gc();*/
+        Log.v(TAG, "Дата: "+fDate);
 
 
         return fDate;

@@ -41,11 +41,11 @@ public class ButActiv extends Activity {
                         break;
                     case R.id.RB2: editor.putInt(periodLoad, 21600);
                         break;
-                    case R.id.RB3: editor.putInt(periodLoad, 10800);
+                    case R.id.RB3: editor.putInt(periodLoad, 10800);//3 часа
                         break;
-                    case R.id.RB4: editor.putInt(periodLoad, 10);
+                    case R.id.RB4: editor.putInt(periodLoad, 10);//10 секунд
                         break;
-                    case R.id.RB5: editor.putInt(periodLoad, 3);
+                    case R.id.RB5: editor.putInt(periodLoad, 3);//3 секунды
                         break;
                 }
 
@@ -55,6 +55,7 @@ public class ButActiv extends Activity {
                 try{
                     if (startServ.equals("true"))
                     {
+                        stopService(new Intent(getBaseContext(), WallService.class));
                         startService(new Intent(getBaseContext(), WallService.class));
                         Toast.makeText(getBaseContext(), "Service the start", Toast.LENGTH_LONG).show();
                         Log.v(TAG, "Service the start");
@@ -73,7 +74,6 @@ public class ButActiv extends Activity {
             @Override
             public void onClick(View view) {
                 finish();
-                //Intent stop = new Intent(getBaseContext(), formGallery.class);
                 Log.v(TAG, "Activity закрыта без сохранения настроек.");
             }
         });

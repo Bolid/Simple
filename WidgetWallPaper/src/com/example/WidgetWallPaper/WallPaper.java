@@ -75,6 +75,7 @@ public class WallPaper extends AppWidgetProvider {
                            Intent start = new Intent(context, WallService.class);
                            context.startService(start);
                            Toast.makeText(context, "Служба запущена.", Toast.LENGTH_LONG).show();
+                           Log.v(TAG, "------------------------");
                            Log.v(TAG, "Служба запущена.");
                        }
                        else
@@ -97,6 +98,7 @@ public class WallPaper extends AppWidgetProvider {
                         context.stopService(new Intent(context, WallService.class));
                         toast.makeText(context, "Служба остановлена.", Toast.LENGTH_LONG).show();
                         Log.v(TAG, "Служба остановлена.");
+                        Log.v(TAG, "======================");
 
                     }
                     catch (Exception e){Log.e(TAG, "Ошибка остановки: ", e);}
@@ -112,7 +114,7 @@ public class WallPaper extends AppWidgetProvider {
             }
             else
             if (action.equals(ACTION_WIDGET_BUTTON4)){
-                Intent formGallery = new Intent(context, formGallery.class);
+                Intent formGallery = new Intent(context, FormGallery.class);
                 formGallery.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(formGallery);
                 }

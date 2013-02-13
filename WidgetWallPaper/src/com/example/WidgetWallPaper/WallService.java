@@ -5,7 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.util.Log;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
@@ -27,19 +32,20 @@ public class WallService extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
         //Bitmap bitmap = null;
-        /*myParser mypar = null;
+        /*MyParser mypar = null;
         BufferedWriter bw = null;
         Calendar calendar = Calendar.getInstance();
         URL conn = null;
         InputSource inputSource = null;
         XMLReader xmlReader = null;
         BufferedInputStream Buf_srt = null;*/
+        BufferedWriter bw = null;
         SharedPreferences mSetting = getSharedPreferences("AppSetting", Context.MODE_PRIVATE);
         /*WallpaperManager wall = WallpaperManager.getInstance(getApplicationContext());
         String url = "";
         String fDate = "";
         try {
-            mypar = new myParser();
+            mypar = new MyParser();
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             xmlReader = saxParser.getXMLReader();
@@ -47,10 +53,29 @@ public class WallService extends IntentService{
             Log.e(TAG, "Ошибка инициализации парсера", e);
         }*/
 
+        WallHistory wallHistory = new WallHistory();
+        wallHistory.createdocumentHistory();
+        try {
+            bw = new BufferedWriter(new OutputStreamWriter(openFileOutput("log.txt", MODE_PRIVATE)));
+            bw.close();
+            bw = null;
+        } catch (FileNotFoundException e) {
 
+        } catch (IOException e){}
         while (servWork){
-            loadContent loadCont = new loadContent(getBaseContext());
+            try {
+                bw = new BufferedWriter(new OutputStreamWriter(openFileOutput("log.txt", MODE_APPEND)));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            LoadContent loadCont = new LoadContent(getBaseContext(), bw, wallHistory);
             loadCont.load();
+            try {
+                bw.close();
+                bw = null;
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
             loadCont = null;
             System.gc();
             /*try {
@@ -108,9 +133,10 @@ public class WallService extends IntentService{
             bw = null;
             System.gc();*/
             try {
+                Log.v(TAG, "Период скачивания: "+Integer.toString(mSetting.getInt("periodLoad", 86400)*1000));
                 Thread.sleep(mSetting.getInt("periodLoad", 86400)*1000);
             } catch (InterruptedException e) {
-                //Log.e(TAG, "ОШИБКА ЗАДЕРЖКИ: ", e);
+                Log.e(TAG, "ОШИБКА ЗАДЕРЖКИ: ", e);
             }
         }
         //url = "";

@@ -5,11 +5,11 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class myParser extends DefaultHandler{
+public class MyParser extends DefaultHandler{
     String url = "";
     String userName = "";
     String title = "";
-	/*public myParser(String parURL) {
+	/*public MyParser(String parURL) {
 		this.url = parURL;
 	}*/
 
