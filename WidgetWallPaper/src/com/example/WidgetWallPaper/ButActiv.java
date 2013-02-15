@@ -3,13 +3,18 @@ package com.example.WidgetWallPaper;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.io.File;
 
 public class ButActiv extends Activity {
     SharedPreferences mSetting;
@@ -17,6 +22,7 @@ public class ButActiv extends Activity {
     final String TAG = "activSet";
     final String AppSetting = "AppSetting";
     final String formSetStart = "formSetStart";
+    final String history = "history";
     final String periodLoad = "periodLoad";
 
 
@@ -27,11 +33,13 @@ public class ButActiv extends Activity {
         setContentView(R.layout.form);
         mSetting = getSharedPreferences(AppSetting, Context.MODE_PRIVATE);
         final Editor editor = mSetting.edit();
-        final CheckBox checkBox = (CheckBox)findViewById(R.id.CB);
+        final CheckBox CBPreview = (CheckBox)findViewById(R.id.CB);
+        final CheckBox CBHistory = (CheckBox)findViewById(R.id.CBHistory);
         final RadioGroup RG = (RadioGroup)findViewById(R.id.radioGroup);
-        getSettingApp(checkBox, RG);
         Button butSave = (Button)findViewById(R.id.button);
         Button butExit = (Button)findViewById(R.id.butExit);
+        final Button butHistoryClear = (Button)findViewById(R.id.ButHistoryClear);
+        getSettingApp(CBPreview, CBHistory, RG, butHistoryClear);
 
         butSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +57,8 @@ public class ButActiv extends Activity {
                         break;
                 }
 
-                editor.putBoolean(formSetStart, checkBox.isChecked());
+                editor.putBoolean(formSetStart, CBPreview.isChecked());
+                editor.putBoolean(history, CBHistory.isChecked());
                 editor.commit();
                 String startServ = getIntent().getExtras().getString("com.example.WidgetWallPaper.startServ");
                 try{
@@ -78,12 +87,31 @@ public class ButActiv extends Activity {
             }
         });
 
+        butHistoryClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                File file = new File("/data/data/com.example.WidgetWallPaper/files/","history.xml");
+                try {
+                    file.delete();
+                    Toast.makeText(getBaseContext(),"История удалена", Toast.LENGTH_LONG).show();
+                    butHistoryClear.setEnabled(false);
+                }catch (Exception e){
+                    Log.v(TAG, "Ошибка при удалении файла настроек" + e);
+                }
+                Log.v(TAG, "Файл настроек удален");
+            }
+        });
+
     }
 
-    public void getSettingApp(CheckBox checkBox, RadioGroup RG) {
+    public void getSettingApp(CheckBox CBPreview, CheckBox CBHistory, RadioGroup RG, Button butHistoryClear) {
+        File file = new File("/data/data/com.example.WidgetWallPaper/files/","history.xml");
+        if (file.isFile() == false) butHistoryClear.setEnabled(false);
+
         if (mSetting.contains(formSetStart))
-            if (mSetting.getBoolean(formSetStart, true))
-                checkBox.setChecked(true);
+            CBPreview.setChecked(mSetting.getBoolean(formSetStart, true));
+        if (mSetting.contains(history))
+            CBHistory.setChecked(mSetting.getBoolean(history, false));
         if (mSetting.contains(periodLoad))
             switch (mSetting.getInt(periodLoad,0)){
                 case 86400: RG.check(R.id.RB1);

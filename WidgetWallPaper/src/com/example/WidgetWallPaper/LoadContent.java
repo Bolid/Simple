@@ -60,7 +60,8 @@ public class LoadContent {
         try {
             bw.write(String.valueOf(calendar.getTime())+": Дата: "+fDate+"\n");
             Log.v(TAG, "URL сервисного документа: " + url);
-            wallHistory.setUrl(url);
+            if (wallHistory != null)
+                wallHistory.setUrl(url);
             bw.write(String.valueOf(calendar.getTime())+": URL сервисного документа: "+url+"\n");
         } catch (IOException e) {    }
         InputSource inputSource = null;
@@ -137,16 +138,6 @@ public class LoadContent {
                     day = random.nextInt(30);
                 else day = random.nextInt(29);
         fDate = day+"-"+month+"-"+year;
-        /*year = 0;
-        month = 0;
-        day = 0;
-        tYear = 0;
-        tDay = 0;
-        tMonth = 0;
-        random = null;
-        calendar = null;
-        pattern = null;
-        System.gc();*/
         Log.v(TAG, "Дата: "+fDate);
 
 

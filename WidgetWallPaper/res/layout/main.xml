@@ -9,7 +9,7 @@
             android:id="@+id/But1"
             android:textColor="#15a059"
             android:textStyle="bold"
-            android:layout_alignParentLeft="true" android:layout_alignTop="@+id/But2"/>
+            android:layout_alignParentLeft="true" android:layout_alignTop="@+id/But2" android:singleLine="false"/>
     <Button
             android:layout_width="70dp"
             android:layout_height="wrap_content"

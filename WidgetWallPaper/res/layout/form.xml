@@ -16,7 +16,7 @@
             android:text="Больше не показывать"
             android:id="@+id/CB"
             android:checked="false"
-            android:layout_alignParentLeft="true" android:layout_above="@+id/button"/>
+            android:layout_alignLeft="@+id/button" android:layout_above="@+id/button"/>
     <TextView
             android:layout_width="111dp"
             android:layout_height="wrap_content"
@@ -72,4 +72,16 @@
             android:id="@+id/butExit"
             android:layout_alignRight="@+id/radioGroup" android:layout_alignTop="@+id/button"
             android:layout_toRightOf="@+id/button"/>
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сохранять историю"
+            android:id="@+id/CBHistory" android:layout_alignLeft="@+id/button" android:layout_below="@+id/radioGroup"
+            android:checked="false"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Очистить"
+            android:id="@+id/ButHistoryClear" android:layout_alignLeft="@+id/textView"
+            android:layout_alignBottom="@+id/CBHistory"/>
 </RelativeLayout>
