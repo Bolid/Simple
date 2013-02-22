@@ -4,6 +4,7 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -18,24 +19,29 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 
 public class LoadContent {
     final String TAG = "SERV";
-
+    String stopServ = null;
     Calendar calendar = Calendar.getInstance();
+
     Context context;
+    String dateLoad = null;
     WallHistory wallHistory;
     BufferedWriter bw = null;
     XMLReader xmlReader = null;
     String fDate = createDate();
     String url = "http://api-fotki.yandex.ru/api/podhistory/poddate;"+fDate+"/?limit=1";
+    Boolean servWork = true;
 
-    public LoadContent(Context context, BufferedWriter bw, WallHistory wallHistory) {
-       this.context = context;
-       this.bw = bw;
-       this.wallHistory = wallHistory;
+    public LoadContent(Context context, BufferedWriter bw, WallHistory wallHistory, Boolean servWork) {
+        this.context = context;
+        this.bw = bw;
+        this.wallHistory = wallHistory;
+        this.servWork = servWork;
     }
 
     public void parse(InputSource inputSource){
@@ -47,27 +53,33 @@ public class LoadContent {
             xmlReader.setContentHandler(mypar);
             xmlReader.parse(inputSource);
             url = mypar.url;
+            if (wallHistory != null)
+                wallHistory.setUrl(url, dateLoad);
             Log.v(TAG, "URL фотки: "+url);
             bw.write("URL фотки: "+url);
-            loadImage(url);
+            pasteImage(loadImage(url));
             return;
         } catch (Exception e){
             Log.e(TAG, "Ошибка инициализации парсера", e);
         }
 
     }
+
     public void load(){
         try {
             bw.write(String.valueOf(calendar.getTime())+": Дата: "+fDate+"\n");
             Log.v(TAG, "URL сервисного документа: " + url);
-            if (wallHistory != null)
-                wallHistory.setUrl(url);
+            if (wallHistory != null){
+                //wallHistory.setUrl(url, dateLoad);
+                Log.v(TAG, "Время загрузки: " + dateLoad);
+            }
             bw.write(String.valueOf(calendar.getTime())+": URL сервисного документа: "+url+"\n");
-        } catch (IOException e) {    }
+        } catch (IOException ioe) {    }
         InputSource inputSource = null;
         //LOG
         try {
             URL conn = new URL(url);
+            Log.v(TAG, "Работа службы: " + servWork);
             inputSource = new InputSource(conn.openStream());
             inputSource.setEncoding("UTF-8");
             parse(inputSource);
@@ -88,23 +100,42 @@ public class LoadContent {
 
 
     }
-    public void loadImage(String url){
+
+    public Bitmap loadImage(String url){
+        Bitmap bitmap = null;
         try {
+            //url = "http://img-fotki.yandex.ru/get/6600/81563225.3de/0_738ec_c77fefa5_XL";
+            Log.v(TAG, "Получили URL из основного потока: "+url);
             URL conn = new URL(url);
+            Log.v(TAG, "Загрузка фото начата...");
             URLConnection URLcon = conn.openConnection();
             BufferedInputStream Buf_srt = new BufferedInputStream(URLcon.getInputStream(),8192);
-            Bitmap bitmap = null;
+            Log.v(TAG, "Загрузка фото завершена.");
+            Log.v(TAG, "Декодируем входящий поток в bitmap...");
             bitmap = BitmapFactory.decodeStream(Buf_srt);
+            Log.v(TAG, "Декодирование завершено.");
             Buf_srt.close();
-            WallpaperManager wall = WallpaperManager.getInstance(context);
-            wall.setBitmap(bitmap);
-            Log.v(TAG, "Обой установлены.");
-            bw.write(String.valueOf(calendar.getTime())+": Обой установлены.\n");
-        }catch (MalformedURLException e) {
-            Log.e(TAG, "Ошибка преобразования адреса: ",e);
-        }catch (IOException e) {
-            Log.e(TAG, "Ошибка загрузки фото: ", e);
+            Log.v(TAG, "Отдаем фото в формате bitmap.");
+        }catch (MalformedURLException mue) {
+            Log.e(TAG, "Ошибка преобразования адреса: ", mue);
+        }catch (IOException ioe) {
+            Log.e(TAG, "Ошибка загрузки фото по url: " + url, ioe);
+        }catch (NetworkOnMainThreadException nomte){
+            Log.e(TAG, "Ошибка загрузки фото: ", nomte);
         }
+        return bitmap;
+    }
+
+    public void pasteImage(Bitmap bitmap) throws IOException {
+
+        WallpaperManager wall = WallpaperManager.getInstance(context);
+        if (servWork) {
+            wall.setBitmap(bitmap);
+
+            Log.v(TAG, "Обой установлены.");
+            bw.write(String.valueOf(calendar.getTime()) + ": Обой установлены.\n");
+        }
+
     }
 
     public String createDate(){
@@ -114,9 +145,8 @@ public class LoadContent {
         int tYear;
         int tDay;
         int tMonth;
-        String fDate = null;
+        //String fDate = null;
         Random random = new Random();
-        Calendar calendar = Calendar.getInstance();
         SimpleDateFormat pattern = new SimpleDateFormat();
         pattern.applyPattern("yyyy");
         tYear = Integer.parseInt(pattern.format(calendar.getTime())); //текущий год
@@ -139,8 +169,11 @@ public class LoadContent {
                 else day = random.nextInt(29);
         fDate = day+"-"+month+"-"+year;
         Log.v(TAG, "Дата: "+fDate);
-
-
+        pattern.applyPattern("dd-MM-yyyy");
+        dateLoad = String.valueOf(pattern.format(calendar.getTime()));
+        Date date = new Date();
+        //dateLoad = String.valueOf(date.getTime());
+        Log.v(TAG,"Дата:  "+ date.getTime());
         return fDate;
     }
 

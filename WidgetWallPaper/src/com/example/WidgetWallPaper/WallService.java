@@ -33,7 +33,7 @@ public class WallService extends IntentService{
         WallHistory wallHistory = null;
         if (mSetting.getBoolean("history", false)) {
             wallHistory = new WallHistory();
-            wallHistory.createdocumentHistory();
+            //wallHistory.createdocumentHistory();
         }
         try {
             bw = new BufferedWriter(new OutputStreamWriter(openFileOutput("log.txt", MODE_PRIVATE)));
@@ -49,7 +49,7 @@ public class WallService extends IntentService{
                 bw = new BufferedWriter(new OutputStreamWriter(openFileOutput("log.txt", MODE_APPEND)));
             } catch (FileNotFoundException e) {
             }
-            LoadContent loadCont = new LoadContent(getBaseContext(), bw, wallHistory);
+            LoadContent loadCont = new LoadContent(getBaseContext(), bw, wallHistory, servWork);
             loadCont.load();
             try {
                 bw.close();

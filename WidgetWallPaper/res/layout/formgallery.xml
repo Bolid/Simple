@@ -8,16 +8,24 @@
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-        <Gallery
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/gallery" android:layout_centerHorizontal="true" android:layout_centerVertical="true"
-                android:longClickable="true" android:focusableInTouchMode="true"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="History"
                 android:id="@+id/Hbut1"
                 android:layout_alignParentLeft="true" android:layout_alignParentTop="true"/>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/IV" android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" android:longClickable="false"/>
+        <Gallery
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gallery"
+                android:longClickable="true" android:focusableInTouchMode="true"
+                android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+                android:layout_marginTop="300dp"
+                />
     </RelativeLayout>
 </LinearLayout>

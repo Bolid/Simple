@@ -93,9 +93,11 @@ public class WallPaper extends AppWidgetProvider {
             if (action.equals(ACTION_WIDGET_BUTTON2)){
                     try
                     {
+                        Intent servStop = new Intent(context, WallService.class);
+                        servStop.putExtra("com.example.WidgetWallPaper.stopServ", "true");
                         Toast toast = new Toast(context);
                         toast.setDuration(500);
-                        context.stopService(new Intent(context, WallService.class));
+                        context.stopService(servStop);
                         toast.makeText(context, "Служба остановлена.", Toast.LENGTH_LONG).show();
                         Log.v(TAG, "Служба остановлена.");
                         Log.v(TAG, "======================");
