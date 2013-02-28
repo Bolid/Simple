@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WidgetWallPaper</string>
+    <string name="path_file_history">/data/data/com.example.WidgetWallPaper/files/</string>
+    <string name="name_file_history">history.xml</string>
 </resources>

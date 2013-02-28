@@ -19,7 +19,7 @@ public class AsyncLoadImage extends AsyncTask {
     @Override
     protected Object doInBackground(Object... objects) {
         for (int i = 0; i < list.size(); i++){
-            bitmap[i] = loadContent.loadImage(String.valueOf(list.get(i)));
+            //bitmap[i] = loadContent.loadImage(String.valueOf(list.get(i)));
             Log.v("Дочерний поток: ", "Работает");
         }
         return null;

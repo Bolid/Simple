@@ -11,9 +11,7 @@ import org.xml.sax.XMLReader;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,7 +25,6 @@ public class LoadContent {
     final String TAG = "SERV";
     String stopServ = null;
     Calendar calendar = Calendar.getInstance();
-
     Context context;
     String dateLoad = null;
     WallHistory wallHistory;
@@ -35,6 +32,7 @@ public class LoadContent {
     XMLReader xmlReader = null;
     String fDate = createDate();
     String url = "http://api-fotki.yandex.ru/api/podhistory/poddate;"+fDate+"/?limit=1";
+    String urlSmall = null;
     Boolean servWork = true;
 
     public LoadContent(Context context, BufferedWriter bw, WallHistory wallHistory, Boolean servWork) {
@@ -53,12 +51,10 @@ public class LoadContent {
             xmlReader.setContentHandler(mypar);
             xmlReader.parse(inputSource);
             url = mypar.url;
-            if (wallHistory != null)
-                wallHistory.setUrl(url, dateLoad);
+            urlSmall = mypar.urlSmall;
             Log.v(TAG, "URL фотки: "+url);
             bw.write("URL фотки: "+url);
             pasteImage(loadImage(url));
-            return;
         } catch (Exception e){
             Log.e(TAG, "Ошибка инициализации парсера", e);
         }
@@ -67,16 +63,13 @@ public class LoadContent {
 
     public void load(){
         try {
-            bw.write(String.valueOf(calendar.getTime())+": Дата: "+fDate+"\n");
+            bw.write(String.valueOf(calendar.getTime()) + ": Дата: " + fDate + "\n");
             Log.v(TAG, "URL сервисного документа: " + url);
-            if (wallHistory != null){
-                //wallHistory.setUrl(url, dateLoad);
-                Log.v(TAG, "Время загрузки: " + dateLoad);
-            }
             bw.write(String.valueOf(calendar.getTime())+": URL сервисного документа: "+url+"\n");
-        } catch (IOException ioe) {    }
+        } catch (IOException ioe) {
+            Log.e(TAG, "Ошибка: ", ioe);
+        }
         InputSource inputSource = null;
-        //LOG
         try {
             URL conn = new URL(url);
             Log.v(TAG, "Работа службы: " + servWork);
@@ -96,26 +89,19 @@ public class LoadContent {
                 Log.e(TAG, "Ошибка: ", e1);
             }
         }
-
-
-
     }
 
-    public Bitmap loadImage(String url){
-        Bitmap bitmap = null;
+    public BufferedInputStream loadImage(String url){
+        BufferedInputStream Buf_srt = null;
         try {
-            //url = "http://img-fotki.yandex.ru/get/6600/81563225.3de/0_738ec_c77fefa5_XL";
-            Log.v(TAG, "Получили URL из основного потока: "+url);
+            Log.v(TAG, "Получили URL: "+url);
             URL conn = new URL(url);
             Log.v(TAG, "Загрузка фото начата...");
             URLConnection URLcon = conn.openConnection();
-            BufferedInputStream Buf_srt = new BufferedInputStream(URLcon.getInputStream(),8192);
+            Buf_srt = new BufferedInputStream(URLcon.getInputStream(),8192);
             Log.v(TAG, "Загрузка фото завершена.");
-            Log.v(TAG, "Декодируем входящий поток в bitmap...");
-            bitmap = BitmapFactory.decodeStream(Buf_srt);
-            Log.v(TAG, "Декодирование завершено.");
-            Buf_srt.close();
-            Log.v(TAG, "Отдаем фото в формате bitmap.");
+            //Buf_srt.close();
+            Log.v(TAG, "Отдаем BufferedInputStream.");
         }catch (MalformedURLException mue) {
             Log.e(TAG, "Ошибка преобразования адреса: ", mue);
         }catch (IOException ioe) {
@@ -123,17 +109,25 @@ public class LoadContent {
         }catch (NetworkOnMainThreadException nomte){
             Log.e(TAG, "Ошибка загрузки фото: ", nomte);
         }
-        return bitmap;
+        return Buf_srt;
     }
 
-    public void pasteImage(Bitmap bitmap) throws IOException {
-
+    public void pasteImage(BufferedInputStream Buf_srt) throws IOException {
+        Bitmap bitmap;
+        Log.v(TAG, "Декодируем входящий поток в bitmap...");
+        bitmap = BitmapFactory.decodeStream(Buf_srt);
+        Log.v(TAG, "Декодирование завершено.");
         WallpaperManager wall = WallpaperManager.getInstance(context);
         if (servWork) {
             wall.setBitmap(bitmap);
-
-            Log.v(TAG, "Обой установлены.");
+            Log.v(TAG, "\nОбой установлены.");
             bw.write(String.valueOf(calendar.getTime()) + ": Обой установлены.\n");
+
+            if (wallHistory != null){
+                wallHistory.setUrl(url, savePhotoSmall(urlSmall), dateLoad);
+                Log.v(TAG, "Время загрузки: " + dateLoad);
+            }
+
         }
 
     }
@@ -175,6 +169,40 @@ public class LoadContent {
         //dateLoad = String.valueOf(date.getTime());
         Log.v(TAG,"Дата:  "+ date.getTime());
         return fDate;
+    }
+
+    public String savePhotoSmall(String urlSmall){
+        FileOutputStream fileOutputStream = null;
+        Random random = new Random();
+
+        String fileName = "";
+        for (int i = 0; i < 16; i++)
+            fileName = fileName + String.valueOf(random.nextInt(10));
+        fileName = fileName + ".jpg";
+        Log.v(TAG, "Имя фото: " + fileName);
+        try
+        {
+            File file = new File(context.getExternalFilesDir(null).getPath());
+            Log.v(TAG, "Путь1: "+file.getPath());
+            //Environment.getExternalStorageDirectory().getAbsolutePath()+"/photos/");
+            file.mkdir();
+            fileOutputStream = new FileOutputStream(context.getExternalFilesDir(null).getAbsolutePath()+"/photos/"+fileName);
+
+            //Environment.getExternalStorageDirectory()+"/photos/"+fileName);
+            byte[] byteCont = new byte[2048];
+            int length;
+            BufferedInputStream bufferedInputStream = loadImage(urlSmall);
+            while ((length = bufferedInputStream.read(byteCont)) != -1)
+            {
+               // fileOutputStream.write(byteCont, 0, length);
+            }
+            fileOutputStream.close();
+        } catch (FileNotFoundException fnfe) {
+            Log.e(TAG, "Ошибка открытия файла минифото. ", fnfe);
+        } catch (IOException ioe) {
+            Log.e(TAG, "Ошибка закрытия файла минифото. ", ioe);
+        }
+        return fileName;
     }
 
 }

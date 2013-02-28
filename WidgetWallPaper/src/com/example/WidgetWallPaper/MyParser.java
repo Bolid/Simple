@@ -7,6 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class MyParser extends DefaultHandler{
     String url = "";
+    String urlSmall = "";
     String userName = "";
     String title = "";
 	/*public MyParser(String parURL) {
@@ -17,10 +18,16 @@ public class MyParser extends DefaultHandler{
             throws SAXException{
         try{
             if (localName.equalsIgnoreCase("img"))
+            {
                 if (attributes.getValue(2).toString().equals("XL"))
                 {
                     url = attributes.getValue(1).toString();
                 }
+                if (attributes.getValue(2).toString().equals("S"))
+                {
+                    urlSmall = attributes.getValue(1).toString();
+                }
+            }
             if (localName.equalsIgnoreCase("name"))
                 userName = "1";
             if (qName.equalsIgnoreCase("entry"))

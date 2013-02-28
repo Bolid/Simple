@@ -90,7 +90,7 @@ public class ButActiv extends Activity {
         butHistoryClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File file = new File("/data/data/com.example.WidgetWallPaper/","history.xml");
+                File file = new File("/data/data/com.example.WidgetWallPaper/files/","history.xml");
                 try {
                     file.delete();
                     Toast.makeText(getBaseContext(),"История удалена", Toast.LENGTH_LONG).show();
@@ -105,7 +105,7 @@ public class ButActiv extends Activity {
     }
 
     public void getSettingApp(CheckBox CBPreview, CheckBox CBHistory, RadioGroup RG, Button butHistoryClear) {
-        File file = new File("/data/data/com.example.WidgetWallPaper/","history.xml");
+        File file = new File("/data/data/com.example.WidgetWallPaper/files/","history.xml");
         butHistoryClear.setEnabled(file.isFile());
 
         if (mSetting.contains(formSetStart))

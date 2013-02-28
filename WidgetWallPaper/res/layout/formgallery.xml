@@ -8,24 +8,35 @@
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="History"
-                android:id="@+id/Hbut1"
-                android:layout_alignParentLeft="true" android:layout_alignParentTop="true"/>
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/IV" android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true" android:longClickable="false"/>
         <Gallery
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/gallery"
-                android:longClickable="true" android:focusableInTouchMode="true"
-                android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
-                android:layout_marginTop="300dp"
+                android:id="@+id/galleryView"
+                android:longClickable="false" android:focusableInTouchMode="false"
+                android:layout_alignParentLeft="false"
+                android:layout_centerInParent="true"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/butViewGrid"
+                android:layout_toLeftOf="@+id/butViewGallery" android:layout_alignParentTop="true"
+                android:src="@drawable/grid" android:adjustViewBounds="false" android:baselineAlignBottom="false"
+                android:clickable="false" android:cropToPadding="false"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/butViewGallery"
+                android:layout_centerHorizontal="true" android:src="@drawable/gallery"/>
+        <GridView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/gridView" android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+                android:numColumns="2" android:padding="5dp" android:layout_below="@+id/imageView"
                 />
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView" android:layout_alignLeft="@+id/butViewGrid"
+                android:layout_below="@+id/butViewGrid"/>
     </RelativeLayout>
 </LinearLayout>

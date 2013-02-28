@@ -1,7 +1,6 @@
 package com.example.WidgetWallPaper;
 
 
-import android.graphics.Bitmap;
 import android.util.Log;
 import org.w3c.dom.*;
 
@@ -28,32 +27,34 @@ public class WallHistory {
     Transformer transformer;
     DOMSource domSource;
     StreamResult sr;
-    String filepath = "/data/data/com.example.WidgetWallPaper/";
+    String filepath = "/data/data/com.example.WidgetWallPaper/files/";
     String filename = "history.xml";
     File file = new File(filepath, filename);
 
     public void createdocumentHistory(){
          try{
-                documentBuilder = documentBuilderFactory.newDocumentBuilder();
-                doc = documentBuilder.newDocument();
-                element = doc.createElement("session");
-                doc.appendChild(element);
-                transformerFactory = TransformerFactory.newInstance();
-                transformer = transformerFactory.newTransformer();
-                domSource = new DOMSource(doc);
-                sr = new StreamResult(file);
-                transformer.transform(domSource, sr);
-                Log.v(TAG, "Файл истории создан");
-            } catch (ParserConfigurationException pce){
-                Log.e(TAG, "Ошибка создания файла истории: ", pce);
-            } catch (TransformerConfigurationException tce) {
-                Log.e(TAG, "Ошибка создания файла истории: ", tce);
-            } catch (TransformerException e) {
-                Log.e(TAG, "Ошибка создания файла истории: ", e);
-            }
+             file = new File(filepath);
+             file.mkdir();
+             file = new File(filepath, filename);
+             documentBuilder = documentBuilderFactory.newDocumentBuilder();
+             doc = documentBuilder.newDocument();
+             element = doc.createElement("session");
+             doc.appendChild(element);
+             transformerFactory = TransformerFactory.newInstance();
+             transformer = transformerFactory.newTransformer();
+             domSource = new DOMSource(doc);
+             sr = new StreamResult(file);
+             transformer.transform(domSource, sr);
+         } catch (ParserConfigurationException pce){
+             Log.e(TAG, "Ошибка создания файла истории: ", pce);
+         } catch (TransformerConfigurationException tce) {
+             Log.e(TAG, "Ошибка создания файла истории: ", tce);
+         } catch (TransformerException e) {
+             Log.e(TAG, "Ошибка создания файла истории: ", e);
+         }
     }
 
-    public void setUrl(String url, String dateLoad){
+    public void setUrl(String url, String nameSmall, String dateLoad){
         if (file.isFile() == false)
             createdocumentHistory();
         try {
@@ -69,6 +70,10 @@ public class WallHistory {
 
             attr = doc.createAttribute("link");
             attr.setValue(url);
+            childelement.setAttributeNode(attr);
+
+            attr = doc.createAttribute("nameSmall");
+            attr.setValue(nameSmall);
             childelement.setAttributeNode(attr);
 
             transformerFactory = TransformerFactory.newInstance();
@@ -91,6 +96,7 @@ public class WallHistory {
 
     public List getUrl(){
         String url = null;
+        String nameSmall = null;
         List list = new ArrayList();
         try{
             Log.v("APPLICATION","Файл: " + filepath+filename);
@@ -103,10 +109,11 @@ public class WallHistory {
                 Node node = nodeList.item(i);
                 Log.v("APPLICATION","Элемент: " + node.getNodeName());
                 Element getelement = (Element)node;
-                url = getelement.getAttribute("link");
-                list.add(i, url);
-                Log.v("APPLICATION","Аттрибур: " + getelement.getAttribute("link"));
+                //nameSmall = getelement.getAttribute("nameSmall");
+                list.add(i, getelement.getAttribute("nameSmall"));
+                Log.v("APPLICATION","Аттрибур: " + getelement.getAttribute("nameSmall"));
             }
+            Log.v(TAG, "Длина list (история): "+list.size());
         }
         catch (ParserConfigurationException pce) {
             Log.e("APPLICATION","ОШИБКА ПОЛУЧЕНИЯ АТТРИБУТА:",pce);
