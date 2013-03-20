@@ -23,7 +23,7 @@ public class MyParser extends DefaultHandler{
                 {
                     url = attributes.getValue(1).toString();
                 }
-                if (attributes.getValue(2).toString().equals("S"))
+                if (attributes.getValue(2).toString().equals("M"))
                 {
                     urlSmall = attributes.getValue(1).toString();
                 }

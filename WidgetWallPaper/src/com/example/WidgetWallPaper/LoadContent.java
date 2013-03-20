@@ -4,6 +4,7 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import org.xml.sax.InputSource;
@@ -12,6 +13,8 @@ import org.xml.sax.XMLReader;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -34,12 +37,14 @@ public class LoadContent {
     String url = "http://api-fotki.yandex.ru/api/podhistory/poddate;"+fDate+"/?limit=1";
     String urlSmall = null;
     Boolean servWork = true;
+    int sizePicMini = 0;
 
-    public LoadContent(Context context, BufferedWriter bw, WallHistory wallHistory, Boolean servWork) {
+    public LoadContent(Context context, BufferedWriter bw, WallHistory wallHistory, Boolean servWork, int sizePicMini) {
         this.context = context;
         this.bw = bw;
         this.wallHistory = wallHistory;
         this.servWork = servWork;
+        this.sizePicMini = sizePicMini;
     }
 
     public void parse(InputSource inputSource){
@@ -74,6 +79,8 @@ public class LoadContent {
             URL conn = new URL(url);
             Log.v(TAG, "Работа службы: " + servWork);
             inputSource = new InputSource(conn.openStream());
+            conn = null;
+            System.gc();
             inputSource.setEncoding("UTF-8");
             parse(inputSource);
         }
@@ -89,6 +96,7 @@ public class LoadContent {
                 Log.e(TAG, "Ошибка: ", e1);
             }
         }
+
     }
 
     public BufferedInputStream loadImage(String url){
@@ -168,40 +176,84 @@ public class LoadContent {
         Date date = new Date();
         //dateLoad = String.valueOf(date.getTime());
         Log.v(TAG,"Дата:  "+ date.getTime());
+
         return fDate;
     }
 
     public String savePhotoSmall(String urlSmall){
+        int bitmapSmallHeight;
+        int bitmapSmallWidth;
         FileOutputStream fileOutputStream = null;
+        Bitmap squareBitmapSmall = null;
+        ReferenceQueue squareReferenceQueue = new ReferenceQueue();
         Random random = new Random();
-
+        WeakReference squareWeakReference = null;
         String fileName = "";
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 7; i++)
             fileName = fileName + String.valueOf(random.nextInt(10));
         fileName = fileName + ".jpg";
         Log.v(TAG, "Имя фото: " + fileName);
         try
         {
-            File file = new File(context.getExternalFilesDir(null).getPath());
-            Log.v(TAG, "Путь1: "+file.getPath());
-            //Environment.getExternalStorageDirectory().getAbsolutePath()+"/photos/");
+            File file = new File(Environment.getExternalStorageDirectory()+"/photos/");
             file.mkdir();
-            fileOutputStream = new FileOutputStream(context.getExternalFilesDir(null).getAbsolutePath()+"/photos/"+fileName);
-
-            //Environment.getExternalStorageDirectory()+"/photos/"+fileName);
-            byte[] byteCont = new byte[2048];
-            int length;
+            Log.v(TAG, "Путь1: "+file.getPath());
+            fileOutputStream = new FileOutputStream(Environment.getExternalStorageDirectory()+"/photos/"+fileName);
             BufferedInputStream bufferedInputStream = loadImage(urlSmall);
-            while ((length = bufferedInputStream.read(byteCont)) != -1)
-            {
-               // fileOutputStream.write(byteCont, 0, length);
+            Bitmap bitmapSmall = null;
+            bitmapSmall = BitmapFactory.decodeStream(bufferedInputStream);
+            bufferedInputStream.close();
+            bufferedInputStream = null;
+            try {
+                if (bitmapSmall.getWidth() > bitmapSmall.getHeight()) {
+                    Log.v(TAG, "Книжная ориентация");
+                    bitmapSmallHeight = bitmapSmall.getHeight(); //высота
+                    bitmapSmallWidth = bitmapSmall.getHeight(); //ширина
+                    int pixels[] = new int[bitmapSmallHeight * bitmapSmallWidth];
+                    squareBitmapSmall = Bitmap.createBitmap(bitmapSmallWidth, bitmapSmallHeight, Bitmap.Config.ARGB_8888);
+                    bitmapSmall.getPixels(pixels, 0, bitmapSmallWidth, (bitmapSmall.getWidth()-bitmapSmall.getHeight())/2, 0, bitmapSmallWidth, bitmapSmallHeight);
+                    squareBitmapSmall.setPixels(pixels, 0, bitmapSmallWidth, 0, 0, bitmapSmallWidth, bitmapSmallHeight);
+                    squareBitmapSmall = Bitmap.createScaledBitmap(squareBitmapSmall, sizePicMini, sizePicMini, false);
+                }
+                else {
+                    Log.v(TAG, "Альбомная ориентация");
+                    bitmapSmallHeight = bitmapSmall.getWidth(); //высота
+                    bitmapSmallWidth = bitmapSmall.getWidth(); //ширина
+                    int pixels[] = new int[bitmapSmallHeight * bitmapSmallWidth];
+                    squareBitmapSmall = Bitmap.createBitmap(bitmapSmallWidth, bitmapSmallHeight, Bitmap.Config.ARGB_8888);
+                    bitmapSmall.getPixels(pixels, 0, bitmapSmallHeight, 0, (bitmapSmall.getHeight()-bitmapSmall.getWidth())/2, bitmapSmallWidth, bitmapSmallHeight);
+                    squareBitmapSmall.setPixels(pixels, 0, bitmapSmallHeight, 0, 0, bitmapSmallWidth, bitmapSmallHeight);
+                    squareBitmapSmall = Bitmap.createScaledBitmap(squareBitmapSmall, sizePicMini, sizePicMini, false);
+                }
+            }catch (IllegalStateException ise){
+                Log.e(TAG, "Ошибка bitmap: ", ise);
+            }catch (IllegalArgumentException iae){
+                Log.e(TAG, "Ошибка bitmap: ", iae);
+            }catch (ArrayIndexOutOfBoundsException aioobe){
+                Log.e(TAG, "Ошибка bitmap: ", aioobe);
+            }catch (OutOfMemoryError oome){
+                Log.e(TAG, "НЕДОСТАТОЧНО ПАМЯТИ!", oome);
             }
+            ByteArrayOutputStream array = new ByteArrayOutputStream();
+            squareWeakReference = new WeakReference(squareBitmapSmall, squareReferenceQueue);
+            Log.v(TAG, "Доступность объекта squareBitmapSmall: " + squareWeakReference.get());
+            squareBitmapSmall.compress(Bitmap.CompressFormat.PNG, 0, array);
+            fileOutputStream.write(array.toByteArray());
+           // squareBitmapSmall = null;
+            //squareBitmapSmall.compress(squareReferenceQueue, 0, length);
+           /* while ((length = bufferedInputStream.read(byteCont)) != -1)
+            {
+               fileOutputStream.write(array.toByteArray());
+            }*/
             fileOutputStream.close();
         } catch (FileNotFoundException fnfe) {
             Log.e(TAG, "Ошибка открытия файла минифото. ", fnfe);
         } catch (IOException ioe) {
             Log.e(TAG, "Ошибка закрытия файла минифото. ", ioe);
         }
+        squareBitmapSmall = null;
+        System.gc();
+        Log.v(TAG, "Доступность объекта squareBitmapSmall: " + squareWeakReference.get());
         return fileName;
     }
 

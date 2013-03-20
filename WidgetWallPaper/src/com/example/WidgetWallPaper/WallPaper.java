@@ -69,10 +69,11 @@ public class WallPaper extends AppWidgetProvider {
                 try
                 {
                     SharedPreferences mSetting = context.getSharedPreferences("AppSetting", Context.MODE_PRIVATE);
-                   if (mSetting.contains(formSetStart))
-                       if (mSetting.getBoolean(formSetStart, true))
+                   //if (mSetting.contains(formSetStart))
+                       if (mSetting.getBoolean(formSetStart, false))
                        {
                            Intent start = new Intent(context, WallService.class);
+                           PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
                            context.startService(start);
                            Toast.makeText(context, "Служба запущена.", Toast.LENGTH_LONG).show();
                            Log.v(TAG, "------------------------");

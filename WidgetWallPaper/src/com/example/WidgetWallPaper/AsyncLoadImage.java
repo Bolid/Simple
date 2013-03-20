@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AsyncLoadImage extends AsyncTask {
-    LoadContent loadContent = new LoadContent(null, null, null, null);
+    LoadContent loadContent = new LoadContent(null, null, null, null, 0);
     Bitmap[] bitmap;
     List list = new ArrayList();
     public AsyncLoadImage(Bitmap[] bitmap, List list){

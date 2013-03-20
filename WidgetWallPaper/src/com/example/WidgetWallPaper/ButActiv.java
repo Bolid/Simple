@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -19,11 +21,12 @@ import java.io.File;
 public class ButActiv extends Activity {
     SharedPreferences mSetting;
     Boolean setSave = true;
-    final String TAG = "activSet";
+    final String TAG = "com.example.WidgetWallPaper";
     final String AppSetting = "AppSetting";
     final String formSetStart = "formSetStart";
     final String history = "history";
     final String periodLoad = "periodLoad";
+    final String sizePicMini = "sizePicMini";
 
 
     @Override
@@ -40,6 +43,8 @@ public class ButActiv extends Activity {
         Button butExit = (Button)findViewById(R.id.butExit);
         final Button butHistoryClear = (Button)findViewById(R.id.ButHistoryClear);
         getSettingApp(cbPreview, cbHistory, RG, butHistoryClear);
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         butSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +64,7 @@ public class ButActiv extends Activity {
 
                 editor.putBoolean(formSetStart, cbPreview.isChecked());
                 editor.putBoolean(history, cbHistory.isChecked());
+                editor.putInt(sizePicMini, displayMetrics.widthPixels/3-2);
                 editor.commit();
                 String startServ = getIntent().getExtras().getString("com.example.WidgetWallPaper.startServ");
                 try{
@@ -73,6 +79,7 @@ public class ButActiv extends Activity {
                 catch (Exception e){
                     Log.e(TAG, "Error start service in activity: ", e);
                 }
+                Log.v(TAG, "Размеры экрана: " + displayMetrics.widthPixels);
                 finish();
                 Log.v(TAG, "Настройки сохранены. Activity закрыта");
 
@@ -90,13 +97,20 @@ public class ButActiv extends Activity {
         butHistoryClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File file = new File("/data/data/com.example.WidgetWallPaper/files/","history.xml");
                 try {
+                    File file = new File("/data/data/com.example.WidgetWallPaper/files/","history.xml");
                     file.delete();
+                    file = new File(Environment.getExternalStorageDirectory()+"/photos/");
+                    if (file.isDirectory()){
+                        for (File child : file.listFiles())
+                            child.delete();
+                    }
+                    file.delete();
+                    file = null;
                     Toast.makeText(getBaseContext(),"История удалена", Toast.LENGTH_LONG).show();
                     butHistoryClear.setEnabled(false);
                 }catch (Exception e){
-                    Log.v(TAG, "Ошибка при удалении файла настроек" + e);
+                    Log.e(TAG, "Ошибка при удалении файла настроек" + e);
                 }
                 Log.v(TAG, "Файл настроек удален");
             }

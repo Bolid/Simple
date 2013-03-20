@@ -1,6 +1,7 @@
 package com.example.WidgetWallPaper;
 
 
+import android.os.Environment;
 import android.util.Log;
 import org.w3c.dom.*;
 
@@ -98,6 +99,7 @@ public class WallHistory {
         String url = null;
         String nameSmall = null;
         List list = new ArrayList();
+        int indexList = 0;
         try{
             Log.v("APPLICATION","Файл: " + filepath+filename);
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -110,8 +112,13 @@ public class WallHistory {
                 Log.v("APPLICATION","Элемент: " + node.getNodeName());
                 Element getelement = (Element)node;
                 //nameSmall = getelement.getAttribute("nameSmall");
-                list.add(i, getelement.getAttribute("nameSmall"));
-                Log.v("APPLICATION","Аттрибур: " + getelement.getAttribute("nameSmall"));
+                File file1 = new File(Environment.getExternalStorageDirectory()+"/photos/"+getelement.getAttribute("nameSmall"));
+                if (file1.isFile()){
+                    list.add(indexList, getelement.getAttribute("nameSmall"));
+                    Log.v("APPLICATION","Аттрибур: " + getelement.getAttribute("nameSmall"));
+                    indexList = indexList + 1;
+                }
+
             }
             Log.v(TAG, "Длина list (история): "+list.size());
         }

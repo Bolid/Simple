@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.*;
+import android.widget.Gallery;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class FormGallery extends Activity {
-    public String TAG = "FormGallery";
+    public String TAG = "WallPapperPhotoDay. ActivGallery";
     Boolean grid = false;
     GridView gridView;
     MyAdapter myAdapter;
@@ -22,16 +25,19 @@ public class FormGallery extends Activity {
         gridView = (GridView)findViewById(R.id.gridView);
         final ImageButton butViewGallery = (ImageButton)findViewById(R.id.butViewGallery);
         final ImageButton butViewGrid = (ImageButton)findViewById(R.id.butViewGrid);
+        butViewGallery.setVisibility(View.INVISIBLE);
+        butViewGrid.setVisibility(View.INVISIBLE);
         //AsyncLoadImage asyncLoadImage = new AsyncLoadImage(gallery);
-        myAdapter = new MyAdapter(this, grid);
+        myAdapter = new MyAdapter(this);
+        gridView.setAdapter(myAdapter);
         //gallery.setAdapter(myAdapter);
 
-        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.v(TAG, "Адаптер: " + i + view);
             }
-        });
+        });*/
         butViewGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,15 +58,20 @@ public class FormGallery extends Activity {
                 gridView.setAdapter(myAdapter);
                 butViewGallery.setEnabled(true);
                 butViewGrid.setEnabled(false);
-                grid = true;
             }
         });
 
     }
     public void onStop() {
         super.onStop();
+        myAdapter = null;
+        gridView = null;
         finish();
+        System.gc();
         Log.v(TAG, "Форма убита");
 
+    }
+    public void onDestroy(){
+        super.onDestroy();
     }
 }
