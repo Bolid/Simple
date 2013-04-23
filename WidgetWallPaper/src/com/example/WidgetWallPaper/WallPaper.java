@@ -1,5 +1,6 @@
 package com.example.WidgetWallPaper;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -10,18 +11,21 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class WallPaper extends AppWidgetProvider {
     public static String ACTION_WIDGET_BUTTON1 = "But1";
     public static String ACTION_WIDGET_BUTTON2 = "But2";
     public static String ACTION_WIDGET_BUTTON3 = "But3";
     public static String ACTION_WIDGET_BUTTON4 = "But4";
+    public static String ACTION_WIDGET_ALARM_MANAGER = "com.example.WidgetWallPaper_WORK_ALARM";
     public static String SetStart = "SetActic";
     public static String Recev = "Recever";
     public static PendingIntent button1PendingIntent = null;
     public static PendingIntent button2PendingIntent = null;
     public static PendingIntent button3PendingIntent = null;
     public static PendingIntent button4PendingIntent = null;
-    final String TAG = "App";
+    final String TAG = "com.example.WidgetWallPaper.Widget";
    @Override
     public  void onEnabled(Context context){
     }
@@ -63,21 +67,27 @@ public class WallPaper extends AppWidgetProvider {
         //Ловим наш Broadcast, проверяем и выводим сообщение
         final String formSetStart = "formSetStart";
         final String action = intent.getAction();
+        AlarmManager alarmManager = null;
+        PendingIntent pendingIntent = null;
+        Intent start = new Intent(context, WallService.class);
+        pendingIntent = PendingIntent.getService(context, 0, start, 0);
+        alarmManager = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
+        SharedPreferences mSetting = context.getSharedPreferences("AppSetting", Context.MODE_PRIVATE);;
+        SharedPreferences.Editor editor = mSetting.edit();
         {
             if (action.equals(ACTION_WIDGET_BUTTON1)) {
 
                 try
                 {
-                    SharedPreferences mSetting = context.getSharedPreferences("AppSetting", Context.MODE_PRIVATE);
                    //if (mSetting.contains(formSetStart))
                        if (mSetting.getBoolean(formSetStart, false))
                        {
-                           Intent start = new Intent(context, WallService.class);
-                           PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
-                           context.startService(start);
-                           Toast.makeText(context, "Служба запущена.", Toast.LENGTH_LONG).show();
-                           Log.v(TAG, "------------------------");
-                           Log.v(TAG, "Служба запущена.");
+                           alarmManager.cancel(pendingIntent);
+                           alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), mSetting.getInt("periodLoad", 86400)*1000, pendingIntent);
+                           Toast.makeText(context, "Служба запущена.", Toast.LENGTH_SHORT).show();
+                           Log.v(TAG, "------------------------\nСлужба запущена. " + intent.getAction());
+                           editor.putBoolean("workAlarm", true);
+                           editor.commit();
                        }
                        else
                        {
@@ -98,10 +108,11 @@ public class WallPaper extends AppWidgetProvider {
                         servStop.putExtra("com.example.WidgetWallPaper.stopServ", "true");
                         Toast toast = new Toast(context);
                         toast.setDuration(500);
-                        context.stopService(servStop);
-                        toast.makeText(context, "Служба остановлена.", Toast.LENGTH_LONG).show();
-                        Log.v(TAG, "Служба остановлена.");
-                        Log.v(TAG, "======================");
+                        alarmManager.cancel(pendingIntent);
+                        toast.makeText(context, "Служба остановлена.", Toast.LENGTH_SHORT).show();
+                        Log.v(TAG, "Служба остановлена.\n======================" );
+                        editor.putBoolean("workAlarm", false);
+                        editor.commit();
 
                     }
                     catch (Exception e){Log.e(TAG, "Ошибка остановки: ", e);}
@@ -120,6 +131,13 @@ public class WallPaper extends AppWidgetProvider {
                 Intent formGallery = new Intent(context, FormGallery.class);
                 formGallery.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(formGallery);
+                }
+            else
+            if (action.equals(ACTION_WIDGET_ALARM_MANAGER))
+                if (mSetting.getBoolean("workAlarm", false)){
+                    alarmManager.cancel(pendingIntent);
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), mSetting.getInt("periodLoad", 86400)*1000, pendingIntent);
+                    Log.v(TAG, "Работа перезапущена.");
                 }
 
         }

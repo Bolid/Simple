@@ -14,36 +14,40 @@ import android.widget.ImageView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MyAdapter extends BaseAdapter {
-    final String TAG = "AppAdapter";
-    int mGallary;
-    int bitmapHeight;
-    int bitmapWidth;
-    int pixels[];
+    final String TAG = "com.example.WidgetWallPaper.AppAdapter";
+    Boolean pasteBitmap = false;
+    ImageView view = null;
+    int idVisibleView = 0;
+    File file = null;
+    Calendar calendar = Calendar.getInstance();
+    Long time = Long.valueOf(0);
     Context mContext;
     WallHistory wallHistory = new WallHistory();
     List list = new ArrayList();
     String nameSmall[];
-    int  image[] = new int[4];
     final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
-    final int casheSize = maxMemory / 2;
+    final int casheSize = maxMemory / 4;
     private LruCache<String, Bitmap> mMemoryCashe;
-    public MyAdapter(Context context) {
+    Bitmap bitmap = null;
+    public MyAdapter(Context context, Bitmap bitmap, int sizePr) {
+        this.bitmap = Bitmap.createScaledBitmap(bitmap, sizePr, sizePr, false);
         Log.v(TAG, "Память: " + maxMemory);
         this.mContext = context;
         this.list = wallHistory.getUrl();
         nameSmall = new String[list.size()];
-        for (int i = 0; i < list.size(); i++){
-            Log.v(TAG, "Имя: "+ list.get(i)+"\nIndex list: "+list.indexOf(list.get(i)));
-        }
         mMemoryCashe = new LruCache<String, Bitmap>(casheSize){
             @Override
             protected int sizeOf (String key, Bitmap bitmap){
                 return bitmap.getByteCount() / 1024;
             }
         };
+
+        BitmapInsertAllCache bitmapInsertAllCache = new BitmapInsertAllCache();
+        bitmapInsertAllCache.execute();
     }
 
     public void addBitmapToMemoryCache(String key){
@@ -73,128 +77,92 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        Log.v(TAG, "Индекс getItemId: "+i);
+       // Log.v(TAG, "Индекс getItemId: " + i + " " + view);
         return i;
     }
 
-    @Override
-    public View getView(int i, View view1, ViewGroup viewGroup) {
-        /*BitmapFactory bitmapFactory = new BitmapFactory();
-        Bitmap origBitmap = Bitmap.createBitmap(bitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/photos/" + list.get(i)));
-        //Log.v(TAG, "Width (до кадрирования) = "+origBitmap.getWidth()+"\nДлина (до кадрирования) = "+origBitmap.getHeight());
-        Bitmap bitmap = null;
-        try{
-            if (origBitmap.getWidth() > origBitmap.getHeight()){
-                Log.v(TAG, "Книжная ориентация");
-                bitmapHeight = origBitmap.getHeight(); //высота
-                bitmapWidth = origBitmap.getHeight(); //ширина
-                pixels = new int[bitmapHeight * bitmapWidth];
-                bitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888);
-                origBitmap.getPixels(pixels, 0, bitmapWidth, (origBitmap.getWidth()-origBitmap.getHeight())/2, 0, bitmapWidth, bitmapHeight);
-                bitmap.setPixels(pixels,0,bitmapWidth,0,0,bitmapWidth,bitmapHeight);
+    public int getViewTypeCount(){
+        super.getViewTypeCount();
+        Log.v(TAG, "Мы тут 0");
+        return 1500;
+    }
 
-                bitmap = Bitmap.createScaledBitmap(bitmap, 720/3-4, 720/3-4, false);
-            }
-            else{
-                Log.v(TAG, "Альбомная ориентация");
-                bitmapHeight = origBitmap.getWidth();
-                bitmapWidth = origBitmap.getWidth();
-                int pixels[] = new int[bitmapHeight * bitmapWidth];
-                bitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888);
-                origBitmap.getPixels(pixels, 0, bitmapHeight,0, (origBitmap.getHeight()-origBitmap.getWidth())/2, bitmapWidth, bitmapHeight);
-                bitmap.setPixels(pixels, 0, bitmapHeight, 0, 0, bitmapWidth, bitmapHeight);
-                bitmap = Bitmap.createScaledBitmap(bitmap, 720/3-4, 720/3-4, false);
-            }
-            //Log.v(TAG, "Width = "+bitmap.getWidth()+"\nДлина = "+bitmap.getHeight());
-        }catch (IllegalStateException ise){
-            Log.e(TAG, "Ошибка bitmap: ", ise);
-        }catch (IllegalArgumentException iae){
-            Log.e(TAG, "Ошибка bitmap: ", iae);
-        }catch (ArrayIndexOutOfBoundsException aioobe){
-            Log.e(TAG, "Ошибка bitmap: ", aioobe);
-        }catch (OutOfMemoryError oome){
-            Log.e(TAG, "НЕДОСТАТОЧНО ПАМЯТИ!", oome);
-            //bitmap.recycle();
-            FormGallery formGallery = new FormGallery();
-            //formGallery.onDestroy();
-            formGallery = null;
-            System.gc();
+    public Boolean isScroll(Long update){
+        //time = Long.valueOf((calendar.get(Calendar.MINUTE))*60000 + (calendar.get(Calendar.SECOND))*1000 + (calendar.get(Calendar.MILLISECOND)));
+        Log.v(TAG, String.valueOf(update) +" "+ String.valueOf(time)+" "+ String.valueOf(update - time));
+        if (update - time > 300){
+            time = update;
+            return true;
         }
-         //Drawable drawable = Drawable.createFromPath(Environment.getExternalStorageDirectory() +"/photos/" + list.get(i));
-        //drawable.setBounds(25,25,25,25);*/
-        ImageView view = new ImageView(mContext);
-        //view.setImageBitmap(bitmap);
-        //view.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() +"/photos/" + list.get(i)));
-        File file = new File(Environment.getExternalStorageDirectory() + "/photos/" + list.get(i));
+        else{
+            time = update;
+            return false;
+        }
+    }
+
+    public boolean isEmpty(){
+        super.isEmpty();
+        return false;
+    }
+
+    @Override
+    public View getView(final int i, View view1, ViewGroup viewGroup) {
+        idVisibleView = i;
+        if (view1 == null)
+            view = new ImageView(mContext);
+        else
+            view = (ImageView)view1;
+        //Log.v(TAG,"Селектед: " + viewGroup.isSelected());
+        file = new File(Environment.getExternalStorageDirectory() + "/photos/" + list.get(i));
         if (getBitmapFromMemCache(file.getPath()) != null){
             view.setImageBitmap(getBitmapFromMemCache(file.getPath()));
-            Log.v(TAG, "Взято из кэша");
+            //Log.v(TAG, "Взято из кэша " + viewGroup.isShown());
         }
         else {
-            BitmapAddWorkerTask task = new BitmapAddWorkerTask();
-            task.execute(file.getPath());
-            view.setImageBitmap(BitmapFactory.decodeFile(file.getPath()));
-            Log.v(TAG, "Нет ничего");
+            //BitmapAddWorkerTask task = new BitmapAddWorkerTask();
+            //task.execute(file.getPath());
+            //view.setImageBitmap(BitmapFactory.decodeFile(file.getPath()));
+            calendar = Calendar.getInstance();
+
+            try {
+                view.setImageBitmap(bitmap);
+                Log.v(TAG,"Селектед: " + i);
+                new AsyncTask<View, String, Bitmap>(){
+                    private ImageView v;
+                    private int j = i;
+                    private String path = file.getPath();
+
+                        @Override
+                        protected Bitmap doInBackground(View... params) {
+                            v = (ImageView) params[0];
+                            addBitmapToMemoryCache(path);
+                            return getBitmapFromMemCache(path);
+                        }
+
+                        protected void onPostExecute(Bitmap bitmap1){
+                            Log.v(TAG, "Мы тут 2 " + j + " " + i + " " + v.getId());
+                            v.getId();
+                               v.setImageBitmap(bitmap1);}
+                    }.execute(view);
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                Log.e(TAG, "Error: ", e);
+            }
         }
         view.setPadding(1, 1, 1, 1);
-        /*try{
-           // Log.v(TAG, "Путь " + Environment.getExternalStorageDirectory() + "/photos/" + list.get(i) + "\nЭлемент: " + i);
-            //Log.v(TAG, "Файл найден.\nУстанавливаем...");
-            //if (origBitmap.getWidth() > origBitmap.getHeight())
-                //view.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() +"/photos/" + list.get(i)));
-            view.setPadding(5, 5, 5, 5);
-            //view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            //drawable = null;
-        }
-        catch (ArrayIndexOutOfBoundsException aioobe){
-            Log.e(TAG, "Ошибка: ", aioobe);
-        }catch (Exception e){
-            Log.e(TAG, "Ошибка: ", e);
-        }
-        bitmapFactory = null;
-        origBitmap = null;
-        SoftReference softReference = new SoftReference(bitmap, referenceQueue);
-        bitmap = null;
-        System.gc();
-        Log.e(TAG, "Доступность ссылки: "+softReference.get());
-        //bitmap.recycle();*/
         return view;
     }
 
-    public void loadBitmap(String resId, ImageView imageView){
-        final String imageKey = resId;
-        final Bitmap bitmap = getBitmapFromMemCache(imageKey);
-        if (bitmap != null){
-            imageView.setImageBitmap(bitmap);
-            Log.v(TAG, "Взято из кэша");
-        }
-        else{
-            imageView.setImageBitmap(BitmapFactory.decodeFile(resId));
-            BitmapAddWorkerTask task = new BitmapAddWorkerTask();
-            task.execute(resId);
-            Log.v(TAG, "Нет ничего");
-        };
-    }
-    class BitmapAddWorkerTask extends AsyncTask<String, Void, Bitmap>{
+    class BitmapInsertAllCache extends AsyncTask<String, Void,Void>{
 
         @Override
-        protected Bitmap doInBackground(String... params) {
-            Bitmap bitmap = null;
-            bitmap = Bitmap.createBitmap(BitmapFactory.decodeFile(params[0]));
-            addBitmapToMemoryCache(params[0]);
-            return bitmap;
-        }
-    }
-    class BitmapDelWorkedTask extends AsyncTask<String, Void, Void>{
+        protected Void doInBackground(String... strings) {
+            for (int i = 0; i < 20; i++){
+                addBitmapToMemoryCache(Environment.getExternalStorageDirectory() +"/photos/"+list.get(i));
+                Log.v(TAG, i + " Записали в кеш изображение: " + list.get(i));
 
-        @Override
-        protected Void doInBackground(String... params) {
-            clearBitmapToMemoryCache(params[0]);
+            }
             return null;
         }
     }
-
-
-
-
 }

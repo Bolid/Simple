@@ -1,6 +1,10 @@
 package com.example.WidgetWallPaper;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,10 +31,12 @@ public class FormGallery extends Activity {
         final ImageButton butViewGrid = (ImageButton)findViewById(R.id.butViewGrid);
         butViewGallery.setVisibility(View.INVISIBLE);
         butViewGrid.setVisibility(View.INVISIBLE);
-        //AsyncLoadImage asyncLoadImage = new AsyncLoadImage(gallery);
-        myAdapter = new MyAdapter(this);
+        SharedPreferences mSetting = getSharedPreferences("AppSetting", Context.MODE_PRIVATE);
+        final int sizePicMini = mSetting.getInt("sizePicMini", 154);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zag);
+        myAdapter = new MyAdapter(this, bitmap, mSetting.getInt("sizePicMini", 154));
         gridView.setAdapter(myAdapter);
-        //gallery.setAdapter(myAdapter);
+        gallery.setAdapter(myAdapter);
 
        /* gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

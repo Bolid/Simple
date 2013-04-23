@@ -9,6 +9,8 @@
         <receiver android:name=".WallPaper">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="com.templates.widget.WidgetProvider.ACTION_WIDGET_BUTTON1"/>
                 <action android:name="com.templates.widget.WidgetProvider.ACTION_WIDGET_BUTTON3"/>
             </intent-filter>

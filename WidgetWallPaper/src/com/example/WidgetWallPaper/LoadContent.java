@@ -25,7 +25,7 @@ import java.util.Random;
 
 
 public class LoadContent {
-    final String TAG = "SERV";
+    final String TAG = "com.example.WidgetWallPaper.Service";
     String stopServ = null;
     Calendar calendar = Calendar.getInstance();
     Context context;

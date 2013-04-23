@@ -21,12 +21,14 @@ import java.io.File;
 public class ButActiv extends Activity {
     SharedPreferences mSetting;
     Boolean setSave = true;
+    Boolean workAlarmManager = false;
     final String TAG = "com.example.WidgetWallPaper";
     final String AppSetting = "AppSetting";
     final String formSetStart = "formSetStart";
     final String history = "history";
     final String periodLoad = "periodLoad";
     final String sizePicMini = "sizePicMini";
+    final String workAlarm = "workAlarm";
 
 
     @Override
@@ -64,14 +66,16 @@ public class ButActiv extends Activity {
 
                 editor.putBoolean(formSetStart, cbPreview.isChecked());
                 editor.putBoolean(history, cbHistory.isChecked());
-                editor.putInt(sizePicMini, displayMetrics.widthPixels/3-2);
+                editor.putInt(sizePicMini, displayMetrics.widthPixels / 3 - 2);
+                editor.putBoolean(workAlarm, workAlarmManager);
                 editor.commit();
                 String startServ = getIntent().getExtras().getString("com.example.WidgetWallPaper.startServ");
                 try{
                     if (startServ.equals("true"))
                     {
-                        stopService(new Intent(getBaseContext(), WallService.class));
-                        startService(new Intent(getBaseContext(), WallService.class));
+                        Intent start = new Intent(getBaseContext(), WallPaper.class);
+                        start.setAction("But1");
+                        getBaseContext().sendBroadcast(start);
                         Toast.makeText(getBaseContext(), "Service the start", Toast.LENGTH_LONG).show();
                         Log.v(TAG, "Service the start");
                     }
@@ -80,6 +84,12 @@ public class ButActiv extends Activity {
                     Log.e(TAG, "Error start service in activity: ", e);
                 }
                 Log.v(TAG, "Размеры экрана: " + displayMetrics.widthPixels);
+                if (workAlarmManager){
+                    Intent workAlarm = new Intent(getBaseContext(), WallPaper.class);
+                    workAlarm.setAction("com.example.WidgetWallPaper_WORK_ALARM");
+                    getBaseContext().sendBroadcast(workAlarm);
+                    Log.v(TAG, "Отправили интент на перезапуск");
+                }
                 finish();
                 Log.v(TAG, "Настройки сохранены. Activity закрыта");
 
@@ -122,6 +132,8 @@ public class ButActiv extends Activity {
         File file = new File("/data/data/com.example.WidgetWallPaper/files/","history.xml");
         butHistoryClear.setEnabled(file.isFile());
 
+        if (mSetting.contains(workAlarm))
+            workAlarmManager = mSetting.getBoolean(workAlarm, false);
         if (mSetting.contains(formSetStart))
             CBPreview.setChecked(mSetting.getBoolean(formSetStart, true));
         if (mSetting.contains(history))
@@ -144,6 +156,7 @@ public class ButActiv extends Activity {
     }
     public void onStop() {
         super.onStop();
+
         finish();
     }
 }
