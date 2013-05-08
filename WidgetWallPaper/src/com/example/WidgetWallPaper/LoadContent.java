@@ -99,7 +99,7 @@ public class LoadContent {
 
     }
 
-    public BufferedInputStream loadImage(String url){
+    public Bitmap loadImage(String url){
         BufferedInputStream Buf_srt = null;
         try {
             Log.v(TAG, "Получили URL: "+url);
@@ -117,13 +117,13 @@ public class LoadContent {
         }catch (NetworkOnMainThreadException nomte){
             Log.e(TAG, "Ошибка загрузки фото: ", nomte);
         }
-        return Buf_srt;
+        return BitmapFactory.decodeStream(Buf_srt);
     }
 
-    public void pasteImage(BufferedInputStream Buf_srt) throws IOException {
-        Bitmap bitmap;
+    public void pasteImage(Bitmap bitmap) throws IOException {
+        //Bitmap bitmap;
         Log.v(TAG, "Декодируем входящий поток в bitmap...");
-        bitmap = BitmapFactory.decodeStream(Buf_srt);
+        //bitmap = BitmapFactory.decodeStream(Buf_srt);
         Log.v(TAG, "Декодирование завершено.");
         WallpaperManager wall = WallpaperManager.getInstance(context);
         if (servWork) {
@@ -199,11 +199,11 @@ public class LoadContent {
             file.mkdir();
             Log.v(TAG, "Путь1: "+file.getPath());
             fileOutputStream = new FileOutputStream(Environment.getExternalStorageDirectory()+"/photos/"+fileName);
-            BufferedInputStream bufferedInputStream = loadImage(urlSmall);
+            //BufferedInputStream bufferedInputStream = loadImage(urlSmall);
             Bitmap bitmapSmall = null;
-            bitmapSmall = BitmapFactory.decodeStream(bufferedInputStream);
-            bufferedInputStream.close();
-            bufferedInputStream = null;
+            bitmapSmall = loadImage(urlSmall);
+            /*bufferedInputStream.close();
+            bufferedInputStream = null;*/
             try {
                 if (bitmapSmall.getWidth() > bitmapSmall.getHeight()) {
                     Log.v(TAG, "Книжная ориентация");

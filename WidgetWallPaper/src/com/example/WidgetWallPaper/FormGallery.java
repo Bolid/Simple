@@ -2,6 +2,7 @@ package com.example.WidgetWallPaper;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,13 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Gallery;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.*;
 
 public class FormGallery extends Activity {
-    public String TAG = "WallPapperPhotoDay. ActivGallery";
+    public String TAG = "com.example.WidgetWallPaper.FormGallery";
     Boolean grid = false;
     GridView gridView;
     MyAdapter myAdapter;
@@ -36,14 +34,22 @@ public class FormGallery extends Activity {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zag);
         myAdapter = new MyAdapter(this, bitmap, mSetting.getInt("sizePicMini", 154));
         gridView.setAdapter(myAdapter);
-        gallery.setAdapter(myAdapter);
+        //gallery.setAdapter(myAdapter);
 
-       /* gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.v(TAG, "Адаптер: " + i + view);
+                try {
+                    Log.v(TAG, "Name photo: " + myAdapter.listNamePhoto.get(i));
+                    Intent intentStartFormFullPhoto = new Intent(getBaseContext(), FullPhoto.class);
+                    intentStartFormFullPhoto.putExtra(TAG, myAdapter.listNamePhoto.get(i).toString());
+                    startActivity(intentStartFormFullPhoto);
+                }
+                catch (Exception e){
+                    Log.e(TAG, "Error: " + e);
+                }
             }
-        });*/
+        });
         butViewGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,9 +76,9 @@ public class FormGallery extends Activity {
     }
     public void onStop() {
         super.onStop();
-        myAdapter = null;
-        gridView = null;
-        finish();
+//        myAdapter = null;
+//        gridView = null;
+        //finish();
         System.gc();
         Log.v(TAG, "Форма убита");
 

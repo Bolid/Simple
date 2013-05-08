@@ -18,6 +18,7 @@
         </receiver>
         <activity android:name=".ButActiv" android:screenOrientation="portrait"></activity>
         <activity android:name=".FormGallery" android:screenOrientation="portrait"></activity>
+        <activity android:name=".FullPhoto" android:screenOrientation="portrait"></activity>
         <service android:name=".WallService"></service>
     </application>
 </manifest>

@@ -27,7 +27,8 @@ public class MyAdapter extends BaseAdapter {
     Long time = Long.valueOf(0);
     Context mContext;
     WallHistory wallHistory = new WallHistory();
-    List list = new ArrayList();
+    List listNamePhoto = new ArrayList();
+    List listURLFullPhoto = new ArrayList();
     String nameSmall[];
     final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
     final int casheSize = maxMemory / 4;
@@ -37,8 +38,8 @@ public class MyAdapter extends BaseAdapter {
         this.bitmap = Bitmap.createScaledBitmap(bitmap, sizePr, sizePr, false);
         Log.v(TAG, "Память: " + maxMemory);
         this.mContext = context;
-        this.list = wallHistory.getUrl();
-        nameSmall = new String[list.size()];
+        this.listNamePhoto = wallHistory.getUrl();
+        nameSmall = new String[listNamePhoto.size()];
         mMemoryCashe = new LruCache<String, Bitmap>(casheSize){
             @Override
             protected int sizeOf (String key, Bitmap bitmap){
@@ -66,7 +67,7 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        return listNamePhoto.size();
     }
 
     @Override
@@ -113,7 +114,7 @@ public class MyAdapter extends BaseAdapter {
         else
             view = (ImageView)view1;
         //Log.v(TAG,"Селектед: " + viewGroup.isSelected());
-        file = new File(Environment.getExternalStorageDirectory() + "/photos/" + list.get(i));
+        file = new File(Environment.getExternalStorageDirectory() + "/photos/" + listNamePhoto.get(i));
         if (getBitmapFromMemCache(file.getPath()) != null){
             view.setImageBitmap(getBitmapFromMemCache(file.getPath()));
             //Log.v(TAG, "Взято из кэша " + viewGroup.isShown());
@@ -157,10 +158,13 @@ public class MyAdapter extends BaseAdapter {
 
         @Override
         protected Void doInBackground(String... strings) {
-            for (int i = 0; i < 20; i++){
-                addBitmapToMemoryCache(Environment.getExternalStorageDirectory() +"/photos/"+list.get(i));
-                Log.v(TAG, i + " Записали в кеш изображение: " + list.get(i));
-
+            int index = 0;
+            if (listNamePhoto.size() > 20)
+                index = 20;
+            else index = listNamePhoto.size();
+            for (int i = 0; i < index; i++){
+                addBitmapToMemoryCache(Environment.getExternalStorageDirectory() +"/photos/"+listNamePhoto.get(i));
+                Log.v(TAG, i + " Записали в кеш изображение: " + listNamePhoto.get(i));
             }
             return null;
         }
