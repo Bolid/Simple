@@ -17,18 +17,18 @@ public class FullPhoto extends Activity{
         final ImageView imageView = (ImageView)findViewById(R.id.imageView);
         final Button butDel = (Button)findViewById(R.id.butDel);
         final Button butSave = (Button)findViewById(R.id.butSave);
-        String urlFullImage = getIntent().getExtras().getString("com.example.WidgetWallPaper.FormGallery");
+        //String urlFullImage = getIntent().getExtras().getString("com.example.WidgetWallPaper.FormGallery");
         new AsyncTask<String, Void, Bitmap>() {
             @Override
             protected Bitmap doInBackground(String... strings) {
                 LoadContent loadContent = new LoadContent(null, null, null, null, 0);
-                return loadContent.loadImage("http://img-fotki.yandex.ru/get/4105/beysbolka.e/0_397aa_4adbd49b_XL");
+                return loadContent.loadImage(strings[0]);
             }
             protected void onPostExecute(Bitmap bitmap){
                 Log.v("com.example.WidgetWallPaper.FormGallery", bitmap.toString());
                 imageView.setImageBitmap(bitmap);
             }
-        }.execute(null);
+        }.execute(getIntent().getExtras().getString("com.example.WidgetWallPaper.FormGallery"));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

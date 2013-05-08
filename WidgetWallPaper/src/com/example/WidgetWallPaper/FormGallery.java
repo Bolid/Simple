@@ -42,7 +42,7 @@ public class FormGallery extends Activity {
                 try {
                     Log.v(TAG, "Name photo: " + myAdapter.listNamePhoto.get(i));
                     Intent intentStartFormFullPhoto = new Intent(getBaseContext(), FullPhoto.class);
-                    intentStartFormFullPhoto.putExtra(TAG, myAdapter.listNamePhoto.get(i).toString());
+                    intentStartFormFullPhoto.putExtra(TAG, myAdapter.listUrlPhoto.get(i).toString());
                     startActivity(intentStartFormFullPhoto);
                 }
                 catch (Exception e){

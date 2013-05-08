@@ -95,7 +95,7 @@ public class WallHistory {
         //getUrl();
     }
 
-    public List getUrl(){
+    public List getUrl(String param){
         String url = null;
         String nameSmall = null;
         List list = new ArrayList();
@@ -114,9 +114,16 @@ public class WallHistory {
                 //nameSmall = getelement.getAttribute("nameSmall");
                 File file1 = new File(Environment.getExternalStorageDirectory()+"/photos/"+getelement.getAttribute("nameSmall"));
                 if (file1.isFile()){
-                    list.add(indexList, getelement.getAttribute("nameSmall"));
-                    Log.v("APPLICATION","Аттрибур: " + getelement.getAttribute("nameSmall"));
-                    indexList = indexList + 1;
+                    if (param.equals("name")){
+                        list.add(indexList, getelement.getAttribute("nameSmall"));
+                        Log.v("APPLICATION","Аттрибур: " + getelement.getAttribute("nameSmall"));
+                        indexList = indexList + 1;
+                    }
+                    else {
+                        list.add(indexList, getelement.getAttribute("link"));
+                        Log.v("APPLICATION","link: " + getelement.getAttribute("link"));
+                        indexList = indexList + 1;
+                    }
                 }
 
             }

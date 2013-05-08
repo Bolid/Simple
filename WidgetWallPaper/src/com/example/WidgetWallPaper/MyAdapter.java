@@ -28,7 +28,7 @@ public class MyAdapter extends BaseAdapter {
     Context mContext;
     WallHistory wallHistory = new WallHistory();
     List listNamePhoto = new ArrayList();
-    List listURLFullPhoto = new ArrayList();
+    List listUrlPhoto = new ArrayList();
     String nameSmall[];
     final int maxMemory = (int)(Runtime.getRuntime().maxMemory() / 1024);
     final int casheSize = maxMemory / 4;
@@ -38,7 +38,8 @@ public class MyAdapter extends BaseAdapter {
         this.bitmap = Bitmap.createScaledBitmap(bitmap, sizePr, sizePr, false);
         Log.v(TAG, "Память: " + maxMemory);
         this.mContext = context;
-        this.listNamePhoto = wallHistory.getUrl();
+        this.listNamePhoto = wallHistory.getUrl("name");
+        this.listUrlPhoto = wallHistory.getUrl("url");
         nameSmall = new String[listNamePhoto.size()];
         mMemoryCashe = new LruCache<String, Bitmap>(casheSize){
             @Override

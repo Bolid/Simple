@@ -121,23 +121,18 @@ public class LoadContent {
     }
 
     public void pasteImage(Bitmap bitmap) throws IOException {
-        //Bitmap bitmap;
         Log.v(TAG, "Декодируем входящий поток в bitmap...");
-        //bitmap = BitmapFactory.decodeStream(Buf_srt);
         Log.v(TAG, "Декодирование завершено.");
         WallpaperManager wall = WallpaperManager.getInstance(context);
         if (servWork) {
             wall.setBitmap(bitmap);
             Log.v(TAG, "\nОбой установлены.");
             bw.write(String.valueOf(calendar.getTime()) + ": Обой установлены.\n");
-
             if (wallHistory != null){
-                wallHistory.setUrl(url, savePhotoSmall(urlSmall), dateLoad);
+                wallHistory.setUrl(url, savePhotoSmall(bitmap), dateLoad);
                 Log.v(TAG, "Время загрузки: " + dateLoad);
             }
-
         }
-
     }
 
     public String createDate(){
@@ -180,7 +175,7 @@ public class LoadContent {
         return fDate;
     }
 
-    public String savePhotoSmall(String urlSmall){
+    public String savePhotoSmall(Bitmap bitmap){
         int bitmapSmallHeight;
         int bitmapSmallWidth;
         FileOutputStream fileOutputStream = null;
@@ -199,11 +194,7 @@ public class LoadContent {
             file.mkdir();
             Log.v(TAG, "Путь1: "+file.getPath());
             fileOutputStream = new FileOutputStream(Environment.getExternalStorageDirectory()+"/photos/"+fileName);
-            //BufferedInputStream bufferedInputStream = loadImage(urlSmall);
-            Bitmap bitmapSmall = null;
-            bitmapSmall = loadImage(urlSmall);
-            /*bufferedInputStream.close();
-            bufferedInputStream = null;*/
+            Bitmap bitmapSmall = bitmap;
             try {
                 if (bitmapSmall.getWidth() > bitmapSmall.getHeight()) {
                     Log.v(TAG, "Книжная ориентация");
