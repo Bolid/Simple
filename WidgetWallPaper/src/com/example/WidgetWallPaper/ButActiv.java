@@ -29,6 +29,7 @@ public class ButActiv extends Activity {
     final String periodLoad = "periodLoad";
     final String sizePicMini = "sizePicMini";
     final String workAlarm = "workAlarm";
+    final String timeWorkAlarm = "timeWorkAlarm";
 
 
     @Override
@@ -68,6 +69,7 @@ public class ButActiv extends Activity {
                 editor.putBoolean(history, cbHistory.isChecked());
                 editor.putInt(sizePicMini, displayMetrics.widthPixels / 3 - 2);
                 editor.putBoolean(workAlarm, workAlarmManager);
+                editor.putBoolean(timeWorkAlarm, false);
                 editor.commit();
                 String startServ = getIntent().getExtras().getString("com.example.WidgetWallPaper.startServ");
                 try{

@@ -8,8 +8,10 @@ import android.os.Environment;
 import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
@@ -60,8 +62,14 @@ public class LoadContent {
             Log.v(TAG, "URL фотки: "+url);
             bw.write("URL фотки: "+url);
             pasteImage(loadImage(url));
-        } catch (Exception e){
-            Log.e(TAG, "Ошибка инициализации парсера", e);
+        } catch (ParserConfigurationException pce) {
+            Log.e(TAG, "ParserConfigurationException: ", pce);
+        } catch (MalformedURLException mue) {
+            Log.e(TAG, "MalformedURLException: ", mue);
+        } catch (SAXException sxe) {
+            Log.e(TAG, "SAXException: ", sxe);
+        } catch (IOException ioe) {
+            Log.e(TAG, "IOException: ", ioe);
         }
 
     }
@@ -99,7 +107,7 @@ public class LoadContent {
 
     }
 
-    public Bitmap loadImage(String url){
+    public Bitmap loadImage(String url) throws MalformedURLException, IOException{
         BufferedInputStream Buf_srt = null;
         try {
             Log.v(TAG, "Получили URL: "+url);
@@ -110,11 +118,11 @@ public class LoadContent {
             Log.v(TAG, "Загрузка фото завершена.");
             //Buf_srt.close();
             Log.v(TAG, "Отдаем BufferedInputStream.");
-        }catch (MalformedURLException mue) {
+        }/*catch (MalformedURLException mue) {
             Log.e(TAG, "Ошибка преобразования адреса: ", mue);
         }catch (IOException ioe) {
             Log.e(TAG, "Ошибка загрузки фото по url: " + url, ioe);
-        }catch (NetworkOnMainThreadException nomte){
+        }*/catch (NetworkOnMainThreadException nomte){
             Log.e(TAG, "Ошибка загрузки фото: ", nomte);
         }
         return BitmapFactory.decodeStream(Buf_srt);

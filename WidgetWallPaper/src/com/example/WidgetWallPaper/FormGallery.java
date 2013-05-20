@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.*;
 
+import java.util.ArrayList;
+
 public class FormGallery extends Activity {
     public String TAG = "com.example.WidgetWallPaper.FormGallery";
     Boolean grid = false;
@@ -42,7 +44,10 @@ public class FormGallery extends Activity {
                 try {
                     Log.v(TAG, "Name photo: " + myAdapter.listNamePhoto.get(i));
                     Intent intentStartFormFullPhoto = new Intent(getBaseContext(), FullPhoto.class);
-                    intentStartFormFullPhoto.putExtra(TAG, myAdapter.listUrlPhoto.get(i).toString());
+                    ArrayList<String> parameters = new ArrayList<String>(2);
+                    parameters.add(0, myAdapter.listUrlPhoto.get(i).toString());
+                    parameters.add(1, myAdapter.listNamePhoto.get(i).toString());
+                    intentStartFormFullPhoto.putExtra(TAG, parameters);
                     startActivity(intentStartFormFullPhoto);
                 }
                 catch (Exception e){
