@@ -25,7 +25,6 @@ public class FullPhoto extends Activity{
         final Button butDel = (Button)findViewById(R.id.butDel);
         final Button butSave = (Button)findViewById(R.id.butSave);
         final ArrayList<String> parameters = (ArrayList<String>)getIntent().getExtras().get("com.example.WidgetWallPaper.FormGallery");
-        //String urlFullImage = getIntent().getExtras().getString("com.example.WidgetWallPaper.FormGallery");
         new AsyncTask<String, Void, Bitmap>() {
             @Override
             protected Bitmap doInBackground(String... strings) {
