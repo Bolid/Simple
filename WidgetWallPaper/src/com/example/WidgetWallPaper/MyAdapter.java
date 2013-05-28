@@ -114,16 +114,12 @@ public class MyAdapter extends BaseAdapter {
             view = new ImageView(mContext);
         else
             view = (ImageView)view1;
-        //Log.v(TAG,"Селектед: " + viewGroup.isSelected());
         file = new File(Environment.getExternalStorageDirectory() + "/photos/" + listNamePhoto.get(i));
         if (getBitmapFromMemCache(file.getPath()) != null){
             view.setImageBitmap(getBitmapFromMemCache(file.getPath()));
             //Log.v(TAG, "Взято из кэша " + viewGroup.isShown());
         }
         else {
-            //BitmapAddWorkerTask task = new BitmapAddWorkerTask();
-            //task.execute(file.getPath());
-            //view.setImageBitmap(BitmapFactory.decodeFile(file.getPath()));
             calendar = Calendar.getInstance();
 
             try {

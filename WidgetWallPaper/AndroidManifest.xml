@@ -26,9 +26,9 @@
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
             </intent-filter>
-            <meta-data
+            <!--<meta-data
                     android:name="android.service.wallpaper"
-                    android:resource="@xml/wallservice"></meta-data>
+                    android:resource="@xml/wallservice"></meta-data>-->
         </service>
     </application>
 </manifest>
