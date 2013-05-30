@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class FullPhoto extends Activity{
     final String TAG = "com.example.WidgetWallPaper.FullPhoto";
     Boolean buttonShow = true;
+    Bitmap imageBitmap = null;
     public void onCreate(Bundle savIns){
         super.onCreate(savIns);
         setContentView(R.layout.formfullphoto);
@@ -25,12 +26,13 @@ public class FullPhoto extends Activity{
         final Button butDel = (Button)findViewById(R.id.butDel);
         final Button butSave = (Button)findViewById(R.id.butSave);
         final ArrayList<String> parameters = (ArrayList<String>)getIntent().getExtras().get("com.example.WidgetWallPaper.FormGallery");
+        final LoadContent loadContent = new LoadContent(getBaseContext(), null, null, null, 0);
         new AsyncTask<String, Void, Bitmap>() {
             @Override
             protected Bitmap doInBackground(String... strings) {
-                LoadContent loadContent = new LoadContent(null, null, null, null, 0);
                 try {
-                    return loadContent.loadImage(strings[0]);
+                    imageBitmap = loadContent.loadImage(strings[0]);
+                    return imageBitmap;
                 } catch (MalformedURLException e) {
                     Log.e(TAG, "Error mail: ", e);
                     return BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/photos/" + parameters.get(1));
@@ -57,6 +59,16 @@ public class FullPhoto extends Activity{
                     butSave.setVisibility(View.VISIBLE);
                     buttonShow = true;
                 }*/
+            }
+        });
+        butSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    loadContent.pasteImage(imageBitmap);
+                } catch (IOException ioe) {
+                    Log.e(TAG, "Error. ", ioe);
+                }
             }
         });
     }

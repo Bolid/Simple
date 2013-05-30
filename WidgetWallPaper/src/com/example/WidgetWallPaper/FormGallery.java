@@ -33,7 +33,7 @@ public class FormGallery extends Activity {
         butViewGrid.setVisibility(View.INVISIBLE);
         SharedPreferences mSetting = getSharedPreferences("AppSetting", Context.MODE_PRIVATE);
         final int sizePicMini = mSetting.getInt("sizePicMini", 154);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.zag);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.aa);
         myAdapter = new MyAdapter(this, bitmap, mSetting.getInt("sizePicMini", 154));
         gridView.setAdapter(myAdapter);
         //gallery.setAdapter(myAdapter);
