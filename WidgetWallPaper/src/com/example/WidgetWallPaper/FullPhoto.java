@@ -19,9 +19,13 @@ import java.util.ArrayList;
 public class FullPhoto extends Activity{
     final String TAG = "com.example.WidgetWallPaper.FullPhoto";
     Boolean buttonShow = true;
+<<<<<<< HEAD
     Bitmap bitmapDesktop;
     ProgressBar progressBar;
     LoadContent loadContent = new LoadContent(this, null, null, null, 0);
+=======
+    Bitmap imageBitmap = null;
+>>>>>>> d92dc7c10095abedadd4d45aa6cae43bbfa8b0d1
     public void onCreate(Bundle savIns){
         super.onCreate(savIns);
         setContentView(R.layout.formfullphoto);
@@ -29,6 +33,7 @@ public class FullPhoto extends Activity{
         final Button butDel = (Button)findViewById(R.id.butDel);
         final Button butSetWallPaper = (Button)findViewById(R.id.setWallPaper);
         final ArrayList<String> parameters = (ArrayList<String>)getIntent().getExtras().get("com.example.WidgetWallPaper.FormGallery");
+        final LoadContent loadContent = new LoadContent(getBaseContext(), null, null, null, 0);
         new AsyncTask<String, Void, Bitmap>() {
             protected void onPreExecute(){
                 progressBar = (ProgressBar)findViewById(R.id.progressBar);
@@ -36,8 +41,13 @@ public class FullPhoto extends Activity{
             @Override
             protected Bitmap doInBackground(String... strings) {
                 try {
+<<<<<<< HEAD
                     bitmapDesktop = loadContent.loadImage(strings[0]);
                     return bitmapDesktop;
+=======
+                    imageBitmap = loadContent.loadImage(strings[0]);
+                    return imageBitmap;
+>>>>>>> d92dc7c10095abedadd4d45aa6cae43bbfa8b0d1
                 } catch (MalformedURLException e) {
                     Log.e(TAG, "Error mail: ", e);
                     return BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/photos/" + parameters.get(1));
@@ -63,6 +73,19 @@ public class FullPhoto extends Activity{
                 }
             }
         });
+<<<<<<< HEAD
 
+=======
+        butSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    loadContent.pasteImage(imageBitmap);
+                } catch (IOException ioe) {
+                    Log.e(TAG, "Error. ", ioe);
+                }
+            }
+        });
+>>>>>>> d92dc7c10095abedadd4d45aa6cae43bbfa8b0d1
     }
 }

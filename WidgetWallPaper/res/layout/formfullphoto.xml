@@ -17,6 +17,7 @@
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:text="На раб. стол"
             android:id="@+id/setWallPaper" android:layout_toLeftOf="@+id/butDel" android:layout_alignTop="@+id/imageView"
             android:visibility="visible"
@@ -26,4 +27,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/progressBar" android:layout_centerHorizontal="true" android:layout_centerVertical="true"
             android:indeterminate="false" style="@android:style/Widget.ProgressBar.Small"/>
+=======
+            android:text="Set"
+            android:id="@+id/butSave" android:layout_toLeftOf="@+id/butDel" android:layout_alignTop="@+id/imageView"
+            android:visibility="visible"/>
+>>>>>>> d92dc7c10095abedadd4d45aa6cae43bbfa8b0d1
 </RelativeLayout>
