@@ -17,7 +17,13 @@
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="save"
-            android:id="@+id/butSave" android:layout_toLeftOf="@+id/butDel" android:layout_alignTop="@+id/imageView"
-            android:visibility="invisible"/>
+            android:text="На раб. стол"
+            android:id="@+id/setWallPaper" android:layout_toLeftOf="@+id/butDel" android:layout_alignTop="@+id/imageView"
+            android:visibility="visible"
+            android:singleLine="false"/>
+    <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar" android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+            android:indeterminate="false" style="@android:style/Widget.ProgressBar.Small"/>
 </RelativeLayout>

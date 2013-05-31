@@ -70,6 +70,8 @@ public class LoadContent {
             Log.e(TAG, "SAXException: ", sxe);
         } catch (IOException ioe) {
             Log.e(TAG, "IOException: ", ioe);
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: ", e);e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
     }
@@ -128,18 +130,16 @@ public class LoadContent {
         return BitmapFactory.decodeStream(Buf_srt);
     }
 
-    public void pasteImage(Bitmap bitmap) throws IOException {
+    public void pasteImage(Bitmap bitmap) throws Exception {
         Log.v(TAG, "Декодируем входящий поток в bitmap...");
         Log.v(TAG, "Декодирование завершено.");
         WallpaperManager wall = WallpaperManager.getInstance(context);
-        if (servWork) {
-            wall.setBitmap(bitmap);
-            Log.v(TAG, "\nОбой установлены.");
-            bw.write(String.valueOf(calendar.getTime()) + ": Обой установлены.\n");
-            if (wallHistory != null){
-                wallHistory.setUrl(url, savePhotoSmall(bitmap), dateLoad);
-                Log.v(TAG, "Время загрузки: " + dateLoad);
-            }
+        wall.setBitmap(bitmap);
+        Log.v(TAG, "\nОбой установлены.");
+//        bw.write(String.valueOf(calendar.getTime()) + ": Обой установлены.\n");
+        if (wallHistory != null){
+            wallHistory.setUrl(url, savePhotoSmall(bitmap), dateLoad);
+            Log.v(TAG, "Время загрузки: " + dateLoad);
         }
     }
 
